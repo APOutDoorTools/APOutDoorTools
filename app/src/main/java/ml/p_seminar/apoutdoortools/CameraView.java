@@ -39,12 +39,13 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         camera = Camera.open();
+        //camera.setDisplayOrientation(90);
         try {
             camera.setPreviewDisplay(holder);
         } catch (IOException e) {
             e.printStackTrace();
             camera.release();
-            camera=null;
+            camera = null;
         }
     }
 
