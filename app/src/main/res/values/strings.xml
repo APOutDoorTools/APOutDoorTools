@@ -5,4 +5,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="navHeadertext">Alpines Praktikum OutDoor Tools</string>
+    <string name="mail">support: info@p-seminar.ml</string>
 </resources>
