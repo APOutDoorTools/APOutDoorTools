@@ -3,11 +3,13 @@ package ml.p_seminar.apoutdoortools;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
 import java.io.IOException;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static android.view.SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS;
 
 /**
@@ -39,11 +41,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         camera = Camera.open();
-        //camera.setDisplayOrientation(90);
+        camera.setDisplayOrientation(90);
         try {
             camera.setPreviewDisplay(holder);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
             camera.release();
             camera = null;
         }
@@ -54,7 +55,10 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         try {
             Camera.Parameters parameters = camera.getParameters();
             parameters.setPreviewSize(width, height);
+            Log.d("breite",width+"");
+            Log.d("hoehe",height+"");
             camera.setParameters(parameters);
+            camera.setPreviewDisplay(holder);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -63,6 +67,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        camera.stopPreview();
+        camera.release();
+        camera = null;
     }
 }
