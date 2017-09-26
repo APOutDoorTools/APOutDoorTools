@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/textView2"
+    <view
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="nubibusmeter"
-        android:textSize="36sp" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        class="ml.p_seminar.apoutdoortools.CameraView"
+        android:id="@+id/camera"
+        android:layout_gravity="center" />
+
+</FrameLayout>
