@@ -16,6 +16,8 @@ import static android.view.SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS;
 
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
+
+    //nix
     SurfaceHolder surfaceHolder;
     Camera camera;
 
