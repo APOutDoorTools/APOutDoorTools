@@ -3,13 +3,17 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_nubibusmeter"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Nubibusmeter" />
+        <item
             android:id="@+id/nav_hypsometrum"
             android:icon="@drawable/ic_menu_camera"
             android:title="Hypsometrum" />
         <item
-            android:id="@+id/nav_nubibusmeter"
+            android:id="@+id/nav_compass"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Nubibusmeter" />
+            android:title="Kompass" />
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
