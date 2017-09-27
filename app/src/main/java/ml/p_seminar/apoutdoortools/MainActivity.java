@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity
             bernd.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
         } else if (id == R.id.nav_nubibusmeter) {
             bernd.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
+        } else if (id == R.id.nav_nubibusmeter) {
+            bernd.beginTransaction().replace(R.id.content_frame,new CompassFragment()).commit();
         } else if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
