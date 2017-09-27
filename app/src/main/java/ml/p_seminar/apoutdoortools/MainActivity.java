@@ -15,8 +15,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
             bernd.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
         } else if (id == R.id.nav_nubibusmeter) {
             bernd.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
-        } else if (id == R.id.nav_nubibusmeter) {
+        } else if (id == R.id.nav_compass) {
             bernd.beginTransaction().replace(R.id.content_frame,new CompassFragment()).commit();
         } else if (id == R.id.nav_camera) {
             // Handle the camera action
