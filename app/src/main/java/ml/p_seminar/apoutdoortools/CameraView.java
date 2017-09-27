@@ -4,12 +4,11 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import java.io.IOException;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static android.view.SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS;
 
 /**
@@ -41,7 +40,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         camera = Camera.open();
-        camera.setDisplayOrientation(90);
+        //camera.setDisplayOrientation(90);
         try {
             camera.setPreviewDisplay(holder);
         } catch (IOException exception) {
