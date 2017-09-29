@@ -11,10 +11,6 @@ import java.io.IOException;
 
 import static android.view.SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS;
 
-/**
- * Created by lthyr_000 on 26.09.2017.
- */
-
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     SurfaceHolder surfaceHolder;
@@ -40,7 +36,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         camera = Camera.open();
-        //camera.setDisplayOrientation(90);
+        camera.setDisplayOrientation(90);
         try {
             camera.setPreviewDisplay(holder);
         } catch (IOException exception) {
@@ -70,4 +66,15 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
         camera.release();
         camera = null;
     }
+
+    public void setOneShotPreview(Camera.PreviewCallback callback) {
+        if(camera!=null) {
+            camera.setOneShotPreviewCallback(callback);
+        }
+    }
+/*
+    public int getPixel(byte[] bild,int breite,int hoehe,int x,int y){
+
+    }
+*/
 }
