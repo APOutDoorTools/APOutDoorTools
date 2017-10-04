@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static android.view.SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS;
 
-public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
+public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
 
     SurfaceHolder surfaceHolder;
     Camera camera;
@@ -36,13 +36,16 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         camera = Camera.open();
+
         camera.setDisplayOrientation(90);
+
         try {
             camera.setPreviewDisplay(holder);
         } catch (IOException exception) {
             camera.release();
             camera = null;
         }
+        nubibusmeterFragment.fragment.onPreviewFrame(null,camera);
     }
 
     @Override
@@ -69,12 +72,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void setOneShotPreview(Camera.PreviewCallback callback) {
         if(camera!=null) {
+            Log.d("DEBUG","setOneShotPreviewCallback");
+
             camera.setOneShotPreviewCallback(callback);
         }
     }
-/*
-    public int getPixel(byte[] bild,int breite,int hoehe,int x,int y){
-
-    }
-*/
 }
