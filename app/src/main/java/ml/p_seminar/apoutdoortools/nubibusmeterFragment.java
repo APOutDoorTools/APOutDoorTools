@@ -59,16 +59,22 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
             h.postDelayed(r,20);
             return;
         }
-
+/*
+        data=new byte[3];
+        data[0]= 0x02;
+        data[1]= (byte)0x80;
+        data[2]= (byte)0x80;
+*/
         w=0;
         s=0;
         b=0;
         int n=0;
 
         bild=new NV21Image(data,cameraView.getWidth(),cameraView.getHeight());
+        //1,1);
 
-        for(int I=1; I<bild.getBreite();I+=pxlgp){
-            for(int Q=1; Q<bild.getHoehe();Q+=pxlgp){
+        for(int I=0; I<bild.getBreite();I+=pxlgp){
+            for(int Q=0; Q<bild.getHoehe();Q+=pxlgp){
                 switch (bild.istPixelFarbig(I,Q)){
                     case BLAU:
                         b++;

@@ -59,7 +59,7 @@ public class NV21Image {
 			return Farben.NULL;
 		}
 
-		final int s= 70;
+		final int s= 60;
 		final int w=180;
 
 		int durchschnitt=(Color.red(farbe)+Color.green(farbe)+Color.blue(farbe))/3;
