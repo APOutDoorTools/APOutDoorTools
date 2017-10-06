@@ -26,7 +26,7 @@ import static android.content.Context.SENSOR_SERVICE;
  * Created by felix kühn_000 on 27.09.2017.
  */
 
-public class CompassFragment extends Fragment implements SensorEventListener {
+public class AcusMagneticaFragment extends Fragment implements SensorEventListener {
     private View view;
     ImageView compass_img;
     TextView txt_compass;

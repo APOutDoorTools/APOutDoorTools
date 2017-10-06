@@ -34,7 +34,7 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
         Log.d("DEBUG","onPreviewFrame");
-
+/*
         if(data !=null){
             int i[]=decodeYUV420SP(new int[cameraView.getWidth()*cameraView.getHeight()],data,cameraView.getWidth(),cameraView.getHeight());
 
@@ -43,7 +43,7 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
                 Log.d("i","ergebnis "+a);
             }
         }
-
+*/
         cameraView.setOneShotPreview(this);
     }
 
