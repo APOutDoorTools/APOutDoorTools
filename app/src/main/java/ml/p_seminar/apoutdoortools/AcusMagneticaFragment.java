@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class AcusMagneticaFragment extends Fragment implements SensorEventListen
     private View view;
     ImageView compass_img;
     TextView txt_compass;
-    int mAzimuth;
+    float mAzimuth;
     private SensorManager mSensorManager;
     private Sensor mRotationV, mAccelerometer, mMagnetometer;
     boolean haveSensor = false, haveSensor2 = false;
@@ -61,7 +62,7 @@ public class AcusMagneticaFragment extends Fragment implements SensorEventListen
     public void onSensorChanged(SensorEvent event) {
         if (event.sensor.getType() == Sensor.TYPE_ROTATION_VECTOR) {
             SensorManager.getRotationMatrixFromVector(rMat, event.values);
-            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
+            mAzimuth = (float) ((Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360);
         }
 
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
@@ -74,14 +75,27 @@ public class AcusMagneticaFragment extends Fragment implements SensorEventListen
         if (mLastAccelerometerSet && mLastMagnetometerSet) {
             SensorManager.getRotationMatrix(rMat, null, mLastAccelerometer, mLastMagnetometer);
             SensorManager.getOrientation(rMat, orientation);
-            mAzimuth = (int) (Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360;
+            mAzimuth = (float) ((Math.toDegrees(SensorManager.getOrientation(rMat, orientation)[0]) + 360) % 360);
         }
+        //Log.i("Rotation","rotation: "+compass_img.getRotation());
 
-        mAzimuth = Math.round(mAzimuth);
         compass_img.setRotation(-mAzimuth);
+        /*RotateAnimation rotate = new RotateAnimation(compass_img.getRotation(), mAzimuth, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+        float abweichung=mAzimuth-compass_img.getRotation();
+        //                                |       |
+        //                                v       v
+        abweichung = abweichung < 0 ? -abweichung : abweichung;
+        //                  ^       ^
+        //                  |       |
+        if(compass_img.getAnimation()==null||(abweichung!=0&&compass_img.getAnimation().hasEnded())) {
+            int duration = (int) (360 / (abweichung));
+            //if(compass_img.getAnimation()!=null)compass_img.getAnimation().cancel();
+            rotate.setDuration(50);
+            compass_img.startAnimation(rotate);
+        }*/
+
 
         String where = "NW";
-
         if (mAzimuth >= 350 || mAzimuth <= 10)
             where = "N";
         if (mAzimuth < 350 && mAzimuth > 280)
@@ -100,7 +114,7 @@ public class AcusMagneticaFragment extends Fragment implements SensorEventListen
             where = "NE";
 
 
-        txt_compass.setText(mAzimuth + "° " + where);
+        txt_compass.setText(((float)Math.round(mAzimuth*100))/100 + "° " + where);
     }
 
     @Override

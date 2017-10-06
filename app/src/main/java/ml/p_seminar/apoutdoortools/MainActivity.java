@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_hypsometrum) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
         } else if (id == R.id.nav_nubibusmeter) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new NubibusmeterFragment()).commit();
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
         } else if (id == R.id.nav_compass) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new AcusMagneticaFragment()).commit();
         } else if (id == R.id.nav_camera) {

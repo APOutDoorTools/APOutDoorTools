@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +12,10 @@ import android.view.ViewGroup;
  * Created by lthyr_000 on 26.09.2017.
  */
 
-public class NubibusmeterFragment extends Fragment implements Camera.PreviewCallback{
+public class nubibusmeterFragment extends Fragment implements Camera.PreviewCallback{
     private View view;
     private CameraView cameraView;
-    public static NubibusmeterFragment fragment;
+    public static nubibusmeterFragment fragment;
 
     @Nullable
     @Override

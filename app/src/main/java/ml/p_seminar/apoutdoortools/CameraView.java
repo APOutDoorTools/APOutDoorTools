@@ -45,7 +45,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
             camera.release();
             camera = null;
         }
-        NubibusmeterFragment.fragment.onPreviewFrame(null,camera);
+        nubibusmeterFragment.fragment.onPreviewFrame(null,camera);
     }
 
     @Override
