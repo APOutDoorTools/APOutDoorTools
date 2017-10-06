@@ -17,10 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.R;
 
-
-
-
+import static android.content.Context.LOCATION_SERVICE;
 
 
 public class GPSFragment extends Fragment{
@@ -31,15 +30,16 @@ public class GPSFragment extends Fragment{
     private LocationListener locationListener;
     private int zustand;
 
+    private View view;
 
     @Override
-   public void onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate();
+   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(android.R.layout.gps, container, false);
 
         super.onCreate(savedInstanceState);
-        getActivity().setContentView(R.layout.activity_main);
+        getActivity().setContentView(R.layout.gps);
 
-        button = (Button) getActivity().findViewById(R.id.button);
+        button = (Button) getActivity().findViewById(R.id.button1);
 
         textView=(TextView) getView().findViewById(R.id.textView);
         textView.setText("Koordinaten:");
@@ -48,7 +48,7 @@ public class GPSFragment extends Fragment{
         zustand=0;
 
 
-        locationManager = (LocationManager) getgetSystemService(LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
         locationListener = new LocationListener()
         {
@@ -79,17 +79,18 @@ public class GPSFragment extends Fragment{
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)     //Hier wird geprüft, ob eine bestimmte SDK vorhanden ist.
         {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{
                         Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.INTERNET
                 }, 0);
             }
-            return;
+            return null;
         }
         else
         {
             knopfInitialisieren();
         }
+        return view;
     }
 
     @Override
