@@ -30,22 +30,21 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
         style="@android:style/Widget.Material.SeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/text1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="22dp"
         android:max="9"
         android:progress="0"
-        android:layout_margin="20dp"/>
+        android:layout_above="@+id/button"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
 
     <TextView
         android:id="@+id/text1"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_above="@+id/button"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_marginBottom="11dp" />
+        android:text="Benachrichtigungsintervall: aus"
+        android:layout_above="@+id/seekBar"
+        android:layout_alignLeft="@+id/seekBar"
+        android:layout_alignStart="@+id/seekBar" />
 
 </android.widget.RelativeLayout>

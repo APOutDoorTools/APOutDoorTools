@@ -114,6 +114,8 @@ public class GPSFragment extends Fragment{
                 switch (progress){
                     case 0:
                         benachrichtigungsintervall = -1;
+                        TextView tvi = (TextView)view.findViewById(R.id.text1);
+                        tvi.setText("Benachrichtigungsintervall: aus");
                         break;
                     case 1:
                         benachrichtigungsintervall = 10;
@@ -140,12 +142,15 @@ public class GPSFragment extends Fragment{
                         benachrichtigungsintervall = 200;
                         break;
                     case 9:
+                        TextView tve = (TextView)view.findViewById(R.id.text1);
+                        tve.setText("Benachrichtigungsintervall: custom");
                         break;
                     default:
                         benachrichtigungsintervall =1;
                 }
                 TextView tv = (TextView)view.findViewById(R.id.text1);
-                tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
+
+                if(progress!=0 && progress!=9)tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
             }
 
             @Override
@@ -162,7 +167,7 @@ public class GPSFragment extends Fragment{
                         break;
                 }
                 TextView tv = (TextView)view.findViewById(R.id.text1);
-                tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
+                if(seekBar.getProgress()!=0 && seekBar.getProgress()!=9)tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
             }
         });
     }
