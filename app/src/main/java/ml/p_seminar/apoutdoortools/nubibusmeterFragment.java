@@ -3,7 +3,10 @@ package ml.p_seminar.apoutdoortools;
 import android.app.Fragment;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,14 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
     private View view;
     private CameraView cameraView;
     public static nubibusmeterFragment fragment;
+    private int anInt=0;
+    private Handler h;
+    private Runnable r;
+    private NV21Image bild;
+    private final int pxlgp=5;
+    private int w=0;
+    private int s=0;
+    private int b=0;
 
     @Nullable
     @Override
@@ -24,6 +35,15 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
         view=inflater.inflate(R.layout.nubibusmeter,container,false);
         cameraView=(CameraView) view.findViewById(R.id.camera);
         fragment=this;
+
+        h=new Handler();
+        r=new Runnable() {
+            @Override
+            public void run() {
+                cameraView.setOneShotPreview(getInstance());
+            }
+        };
+
         return view;
     }
 
@@ -32,53 +52,54 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
     }
 
     @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
+    public void onPreviewFrame(byte[] data, final Camera camera) {
         //Log.d("DEBUG","onPreviewFrame");
-/*
-        if(data !=null){
-            int i[]=decodeYUV420SP(new int[cameraView.getWidth()*cameraView.getHeight()],data,cameraView.getWidth(),cameraView.getHeight());
 
+        if(data==null){
+            h.postDelayed(r,20);
+            return;
+        }
 
-            for(int a : i){
-                Log.d("i","ergebnis "+a);
+        w=0;
+        s=0;
+        b=0;
+        int n=0;
+
+        bild=new NV21Image(data,cameraView.getWidth(),cameraView.getHeight());
+
+        for(int I=1; I<bild.getBreite();I+=pxlgp){
+            for(int Q=1; Q<bild.getHoehe();Q+=pxlgp){
+                switch (bild.istPixelFarbig(I,Q)){
+                    case BLAU:
+                        b++;
+                        break;
+                    case WEIß:
+                        w++;
+                        break;
+                    case SCHWARZ:
+                        s++;
+                        break;
+                    case NULL:
+                        n++;
+                        break;
+                }
             }
         }
-*/
+        anInt++;
+        if(anInt>50){
+            anInt=0;
+            Log.e("weiß: ",""+w);
+            Log.e("blau: ",""+b);
+            Log.e("schwarz: ",""+s);
+            Log.e("null: ",""+n);
+            Log.e("--------------","");
+        }
+
         cameraView.setOneShotPreview(this);
     }
 
-    private int[] decodeYUV420SP(int[] rgb, byte[] yuv420sp, int width, int height) {
-        final int frameSize = width * height;
-        for (int j = 0, yp = 0; j < height; j++) {
-            int uvp = frameSize + (j >> 1) * width, u = 0, v = 0;
-            for (int i = 0; i < width; i++, yp++) {
-                int y = (0xff & ((int) yuv420sp[yp])) - 16;
-                if (y < 0)
-                    y = 0;
-                if ((i & 1) == 0) {
-                    v = (0xff & yuv420sp[uvp++]) - 128;
-                    u = (0xff & yuv420sp[uvp++]) - 128;
-                }
-                int y1192 = 1192 * y;
-                int r = (y1192 + 1634 * v);
-                int g = (y1192 - 833 * v - 400 * u);
-                int b = (y1192 + 2066 * u);
-                if (r < 0)
-                    r = 0;
-                else if (r > 262143)
-                    r = 262143;
-                if (g < 0)
-                    g = 0;
-                else if (g > 262143)
-                    g = 262143;
-                if (b < 0)
-                    b = 0;
-                else if (b > 262143)
-                    b = 262143;
-                rgb[yp] = 0xff000000 | ((r << 6) & 0xff0000) | ((g >> 2) & 0xff00) | ((b >> 10) & 0xff);
-            }
-        }
-        return rgb;
-    }
 
+    private nubibusmeterFragment getInstance(){
+        return this;
+    }
 }
