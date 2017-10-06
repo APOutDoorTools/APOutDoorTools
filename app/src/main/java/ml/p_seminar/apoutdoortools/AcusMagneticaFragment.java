@@ -43,7 +43,7 @@ public class AcusMagneticaFragment extends Fragment implements SensorEventListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreateView(inflater, container,savedInstanceState);
 
         mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
 

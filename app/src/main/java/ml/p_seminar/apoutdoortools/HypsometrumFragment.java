@@ -18,6 +18,7 @@ public class HypsometrumFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container,savedInstanceState);
         view=inflater.inflate(R.layout.hypsometrum,container,false);
         return view;
     }

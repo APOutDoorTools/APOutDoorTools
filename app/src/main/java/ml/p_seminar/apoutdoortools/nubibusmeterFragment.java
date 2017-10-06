@@ -21,6 +21,7 @@ public class NubibusmeterFragment extends Fragment implements Camera.PreviewCall
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container,savedInstanceState);
         view=inflater.inflate(R.layout.nubibusmeter,container,false);
         cameraView=(CameraView) view.findViewById(R.id.camera);
         fragment=this;
