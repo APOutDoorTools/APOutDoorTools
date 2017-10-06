@@ -1,11 +1,6 @@
 package ml.p_seminar.apoutdoortools;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -90,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_nubibusmeter) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
         } else if (id == R.id.nav_compass) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new CompassFragment()).commit();
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new AcusMagneticaFragment()).commit();
         } else if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
