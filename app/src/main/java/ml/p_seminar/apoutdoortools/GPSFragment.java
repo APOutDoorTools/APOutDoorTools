@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -33,13 +34,16 @@ public class GPSFragment extends Fragment{
     private LocationListener locationListener;
     private int zustand;
 
-    private View view;
+    private View view = null;
     private SeekBar seekBar;
+    private int benachrichtigungsintervall;
 
     @Override
    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container,savedInstanceState);
         view=inflater.inflate(R.layout.gps,container,false);
+
+        benachrichtigungsintervall =-1;
 
         zustand=0;
 
@@ -107,7 +111,41 @@ public class GPSFragment extends Fragment{
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                switch (progress){
+                    case 0:
+                        benachrichtigungsintervall = -1;
+                        break;
+                    case 1:
+                        benachrichtigungsintervall = 10;
+                        break;
+                    case 2:
+                        benachrichtigungsintervall = 25;
+                        break;
+                    case 3:
+                        benachrichtigungsintervall = 42;
+                        break;
+                    case 4:
+                        benachrichtigungsintervall = 50;
+                        break;
+                    case 5:
+                        benachrichtigungsintervall = 75;
+                        break;
+                    case 6:
+                        benachrichtigungsintervall = 100;
+                        break;
+                    case 7:
+                        benachrichtigungsintervall = 150;
+                        break;
+                    case 8:
+                        benachrichtigungsintervall = 200;
+                        break;
+                    case 9:
+                        break;
+                    default:
+                        benachrichtigungsintervall =1;
+                }
+                TextView tv = (TextView)view.findViewById(R.id.text1);
+                tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
             }
 
             @Override
@@ -117,9 +155,47 @@ public class GPSFragment extends Fragment{
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                Log.i("Seekbar","progress: "+seekBar.getProgress());
+                switch (seekBar.getProgress()){
+                    case 9:
+                        dialogmethode();
+                        break;
+                }
+                TextView tv = (TextView)view.findViewById(R.id.text1);
+                tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
             }
         });
+    }
+
+    private void dialogmethode() {
+        AlertDialog.Builder builder;
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        builder = new AlertDialog.Builder(getActivity());
+
+
+        builder.setTitle("Benachrichtigungsdifferenz ändern");
+        final View customView = inflater.inflate(R.layout.custom_dialog, null);
+
+     builder.setView(customView)
+                .setMessage("Benachrichtigungsdifferenz ändern")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText eingabe=(EditText)customView.findViewById(R.id.zahleingabe);
+
+                        String s=eingabe.getText().toString();
+                        benachrichtigungsintervall =Integer.valueOf(s);
+                        TextView g=(TextView) view.findViewById(R.id.text1);
+                        g.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
     }
 
     private void locationManagerInit(){
@@ -181,9 +257,8 @@ public class GPSFragment extends Fragment{
                         Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.INTERNET
                 }, 0);
             }
-            return null;
-        }
-        else
+
+        } else
         {
             knopfInitialisieren();
         }
