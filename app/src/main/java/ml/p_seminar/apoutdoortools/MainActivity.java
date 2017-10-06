@@ -83,14 +83,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        android.app.FragmentManager bernd=getFragmentManager();
+        android.app.FragmentManager fragmentmanager=getFragmentManager();
 
         if (id == R.id.nav_hypsometrum) {
-            bernd.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
         } else if (id == R.id.nav_nubibusmeter) {
-            bernd.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
         } else if (id == R.id.nav_compass) {
-            bernd.beginTransaction().replace(R.id.content_frame,new CompassFragment()).commit();
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new CompassFragment()).commit();
         } else if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
