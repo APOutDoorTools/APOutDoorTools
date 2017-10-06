@@ -9,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.R;
+import ml.p_seminar.apoutdoortools.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -88,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_compass) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new AcusMagneticaFragment()).commit();
         } else if (id == R.id.nav_camera) {
-            bernd.beginTransaction().replace(R.id.content_frame,new CompassFragment()).commit();
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new GPSFragment()).commit();
+            
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

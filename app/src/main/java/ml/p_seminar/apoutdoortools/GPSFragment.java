@@ -41,7 +41,7 @@ public class GPSFragment extends Fragment{
 
         button = (Button) getActivity().findViewById(R.id.button);
 
-        textView=(TextView) getView().findViewById(R.id.textView);
+        textView=(TextView) view.findViewById(R.id.textView);
         textView.setText("Koordinaten:");
         textView.setTextSize(20);
 
