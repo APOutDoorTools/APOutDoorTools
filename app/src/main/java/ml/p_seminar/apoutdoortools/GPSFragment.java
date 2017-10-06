@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.R;
+import ml.p_seminar.apoutdoortools.R;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -34,12 +34,12 @@ public class GPSFragment extends Fragment{
 
     @Override
    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(android.R.layout.gps, container, false);
+        view = inflater.inflate(R.layout.gps, container, false);
 
         super.onCreate(savedInstanceState);
         getActivity().setContentView(R.layout.gps);
 
-        button = (Button) getActivity().findViewById(R.id.button1);
+        button = (Button) getActivity().findViewById(R.id.button);
 
         textView=(TextView) getView().findViewById(R.id.textView);
         textView.setText("Koordinaten:");
@@ -117,6 +117,7 @@ public class GPSFragment extends Fragment{
                 {
                     button.setText("Stop");
                     textView.setText("GPS Signal wird gesucht");
+                    //noinspection MissingPermission
                     locationManager.requestLocationUpdates("gps", 500, 0, locationListener); //(wodurch das Signal zur verfügung gestellt wird, Zeit in Millisekunden, nach der der Standrt erneut überprüft werden soll,Distanz in Metern, nach der der Standort erneut überprüft werden soll)
                     zustand=1;
                 }
