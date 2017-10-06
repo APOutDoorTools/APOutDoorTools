@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import ml.p_seminar.apoutdoortools.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -84,12 +83,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_hypsometrum) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
         } else if (id == R.id.nav_nubibusmeter) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new NubibusmeterFragment()).commit();
         } else if (id == R.id.nav_compass) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new AcusMagneticaFragment()).commit();
         } else if (id == R.id.nav_camera) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new GPSFragment()).commit();
-            
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {

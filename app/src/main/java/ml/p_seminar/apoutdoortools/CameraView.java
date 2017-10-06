@@ -45,7 +45,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
             camera.release();
             camera = null;
         }
-        nubibusmeterFragment.fragment.onPreviewFrame(null,camera);
+        NubibusmeterFragment.fragment.onPreviewFrame(null,camera);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
 
     public void setOneShotPreview(Camera.PreviewCallback callback) {
         if(camera!=null) {
-            Log.d("DEBUG","setOneShotPreviewCallback");
+            //Log.d("DEBUG","setOneShotPreviewCallback");
 
             camera.setOneShotPreviewCallback(callback);
         }

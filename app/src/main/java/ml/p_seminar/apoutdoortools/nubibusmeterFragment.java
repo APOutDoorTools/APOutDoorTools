@@ -13,10 +13,10 @@ import android.view.ViewGroup;
  * Created by lthyr_000 on 26.09.2017.
  */
 
-public class nubibusmeterFragment extends Fragment implements Camera.PreviewCallback{
+public class NubibusmeterFragment extends Fragment implements Camera.PreviewCallback{
     private View view;
     private CameraView cameraView;
-    public static nubibusmeterFragment fragment;
+    public static NubibusmeterFragment fragment;
 
     @Nullable
     @Override
@@ -33,7 +33,7 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-        Log.d("DEBUG","onPreviewFrame");
+        //Log.d("DEBUG","onPreviewFrame");
 /*
         if(data !=null){
             int i[]=decodeYUV420SP(new int[cameraView.getWidth()*cameraView.getHeight()],data,cameraView.getWidth(),cameraView.getHeight());

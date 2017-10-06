@@ -2,7 +2,9 @@ package ml.p_seminar.apoutdoortools;
 
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -12,12 +14,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import ml.p_seminar.apoutdoortools.R;
 
 import static android.content.Context.LOCATION_SERVICE;
 
@@ -34,12 +36,11 @@ public class GPSFragment extends Fragment{
 
     @Override
    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.gps, container, false);
+        view=inflater.inflate(R.layout.gps,container,false);
 
         super.onCreate(savedInstanceState);
-        getActivity().setContentView(R.layout.gps);
 
-        button = (Button) getActivity().findViewById(R.id.button);
+        button = (Button) view.findViewById(R.id.button);
 
         textView=(TextView) view.findViewById(R.id.textView);
         textView.setText("Koordinaten:");
@@ -55,7 +56,7 @@ public class GPSFragment extends Fragment{
             @Override
             public void onLocationChanged(Location location)
             {
-
+                Log.e("debug","neue position");
                 textView.setText("Koordinaten\n\n "+location.getLatitude()+ "\n" + location.getLongitude() + "\nProvider:\t" + location.getProvider() + "\nHöhe:\t" + location.getAltitude() + "\nGenauigkeit:\t" + location.getAccuracy()+" mögliche Abweichung in Metern\n");
             }
 
@@ -72,8 +73,27 @@ public class GPSFragment extends Fragment{
             @Override
             public void onProviderDisabled(String provider)
             {
-                Intent hilfe = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(hilfe);
+                AlertDialog.Builder builder;
+                builder = new AlertDialog.Builder(getActivity());
+
+                builder.setTitle("Activate GPS")
+                        .setMessage("Aktivieren Sie GPS!")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.e("D","INTENT hilfe");
+                                Intent hilfe = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivity(hilfe);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                zustand=1;
+                                knopfdruck();
+                                textView.setText("GPS Zugriff verweigert");
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         };
 
@@ -107,29 +127,39 @@ public class GPSFragment extends Fragment{
 
     private void knopfInitialisieren()
     {
-        button.setOnClickListener(new View.OnClickListener()
+
+        View.OnClickListener onClick = new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-
-                if(zustand==0)
-                {
-                    button.setText("Stop");
-                    textView.setText("GPS Signal wird gesucht");
-                    //noinspection MissingPermission
-                    locationManager.requestLocationUpdates("gps", 500, 0, locationListener); //(wodurch das Signal zur verfügung gestellt wird, Zeit in Millisekunden, nach der der Standrt erneut überprüft werden soll,Distanz in Metern, nach der der Standort erneut überprüft werden soll)
-                    zustand=1;
-                }
-                else
-                {
-                    button.setText("Position Anfragen");
-                    textView.setText("Koordinaten");
-                    locationManager.removeUpdates(locationListener);
-                    zustand=0;
-                }
+                knopfdruck();
             }
-        });
+        };
+        button.setOnClickListener(onClick);
 
     }
+
+    private void knopfdruck(){
+        if(zustand==0)
+        {
+            button.setText("Stop");
+            textView.setText("GPS Signal wird gesucht");
+            //noinspection MissingPermission
+            locationManager.requestLocationUpdates("gps", 500, 0, locationListener); //(wodurch das Signal zur verfügung gestellt wird, Zeit in Millisekunden, nach der der Standrt erneut überprüft werden soll,Distanz in Metern, nach der der Standort erneut überprüft werden soll)
+            zustand=1;
+            Log.d("d","position angefragt");
+        }
+        else
+        {
+            button.setText("Position Anfragen");
+            textView.setText("Koordinaten");
+            locationManager.removeUpdates(locationListener);
+            zustand=0;
+            Log.d("d","stop");
+        }
+    }
+
 }
+
+
