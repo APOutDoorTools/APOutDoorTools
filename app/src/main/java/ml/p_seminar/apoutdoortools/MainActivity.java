@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        debug(R.id.nav_nubibusmeter);
+        //debug(R.id.nav_nubibusmeter);
     }
 
     @Override
