@@ -1,9 +1,9 @@
 package ml.p_seminar.apoutdoortools;
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -59,12 +59,14 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
             h.postDelayed(r,20);
             return;
         }
-/*
+
+        /*
         data=new byte[3];
-        data[0]= 0x02;
-        data[1]= (byte)0x80;
-        data[2]= (byte)0x80;
-*/
+        data[0]= 0x52;
+        data[1]= (byte)0xF0;
+        data[2]= (byte)0x5A;
+        */
+
         w=0;
         s=0;
         b=0;
@@ -91,14 +93,18 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
                 }
             }
         }
+        int pg=w+b+s+n;
         anInt++;
-        if(anInt>50){
+        if(anInt>10){
             anInt=0;
-            Log.e("weiß: ",""+w);
-            Log.e("blau: ",""+b);
-            Log.e("schwarz: ",""+s);
-            Log.e("null: ",""+n);
-            Log.e("--------------","");
+            Log.e("erster Pixel NV21","Y "+data[0]+" Cr "+data[1]+" Cb "+data[2]);
+            int[] x=bild.holePixel(0,0);
+            Log.e("erster Pixel RGB",""+ Color.red(x[1])+" "+Color.green(x[1])+" "+Color.blue(x[1]));
+            Log.e("weißanteil: ",""+w/pg+"%");
+            Log.e("blauanteil: ",""+b/pg+"%");
+            Log.e("schwarzanteil: ",""+s/pg+"%");
+            Log.e("nullanteil: ",""+n/pg+"%");
+            Log.e("--------------","--------------");
         }
 
         cameraView.setOneShotPreview(this);

@@ -2,7 +2,6 @@ package ml.p_seminar.apoutdoortools;
 
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.util.Log;
 
 public class NV21Image {
 
@@ -22,8 +21,8 @@ public class NV21Image {
 	 * @param y
 	 * @return rgb-codierte Farbe des Pixels an der Stelle x/y im YUV/NV21-codierten Bild
 	 */
-	public int holePixel(int x, int y) {
-		if(x>=breite || x<0 || y>=hoehe || y<0)  return -1;
+	public int[] holePixel(int x, int y) {
+		if(x>=breite || x<0 || y>=hoehe || y<0)  return new int[]{-1};
 		int frameSize = breite * hoehe;
 		int uvp = frameSize + (y >> 1) * breite;
 		int Y = (0xff & ((int)bild[breite*y + x])) - 16;
@@ -37,7 +36,7 @@ public class NV21Image {
 		if (r < 0) r = 0; else if (r > 262143) r = 262143;
 		if (g < 0) g = 0; else if (g > 262143) g = 262143;
 		if (b < 0) b = 0; else if (b > 262143) b = 262143;
-		return 0xff000000 | ((r << 6) & 0xff0000) | ((g >> 2) & 0xff00) | ((b >> 10) & 0xff);
+		return new int[]{Y,0xff000000 | ((r << 6) & 0xff0000) | ((g >> 2) & 0xff00) | ((b >> 10) & 0xff)};
 	}
 	
 	public int zaehleBlauePixel(Rect ausschnitt) {
@@ -53,21 +52,24 @@ public class NV21Image {
 	}
 
 	public Farben istPixelFarbig(int x, int y) {
-		int farbe= holePixel(x, y);
+		int[] farbe= holePixel(x, y);
+		int Y=farbe[0]*2;
 
-		if (farbe==-1){
+		if (farbe[0]==-1){
 			return Farben.NULL;
 		}
+
+		int f=farbe[1];
 
 		final int s= 60;
 		final int w=180;
 
-		int durchschnitt=(Color.red(farbe)+Color.green(farbe)+Color.blue(farbe))/3;
-		if(Color.blue(farbe)- durchschnitt > 50) {
+		int durchschnitt=(Color.red(f)+Color.green(f)+Color.blue(f))/3;
+		if(Color.blue(f)- durchschnitt > 50) {
 			return Farben.BLAU;
-		}else if(Color.red(farbe) < s && Color.blue(farbe) < s && Color.green(farbe) < s){
+		}else if(Y<100){
 			return Farben.SCHWARZ;
-		}else if(Color.red(farbe) > w && Color.blue(farbe) > w && Color.green(farbe) > w){
+		}else if(Y>300){
 			return Farben.WEIß;
 		}
 		return Farben.NULL;

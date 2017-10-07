@@ -1,6 +1,7 @@
 package ml.p_seminar.apoutdoortools;
 
 import android.content.Context;
+import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -45,6 +46,14 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
             camera.release();
             camera = null;
         }
+
+        try {
+            Camera.Parameters parameters = camera.getParameters();
+            parameters.setPreviewFormat(ImageFormat.NV21);
+            camera.setParameters(parameters);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         nubibusmeterFragment.fragment.onPreviewFrame(null,camera);
     }
 
@@ -55,8 +64,16 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
             parameters.setPreviewSize(width, height);
             Log.d("breite",width+"");
             Log.d("hoehe",height+"");
+            parameters.setPreviewFormat(ImageFormat.NV21);
             camera.setParameters(parameters);
             camera.setPreviewDisplay(holder);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        try {
+            Camera.Parameters parameters = camera.getParameters();
+            parameters.setPreviewFormat(ImageFormat.NV21);
+            camera.setParameters(parameters);
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        debug(R.id.nav_nubibusmeter);
     }
 
     @Override
@@ -103,5 +105,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void debug(int id){
+        android.app.FragmentManager fragmentmanager=getFragmentManager();
+
+        if (id == R.id.nav_hypsometrum) {
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
+        } else if (id == R.id.nav_nubibusmeter) {
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
+        } else if (id == R.id.nav_compass) {
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new AcusMagneticaFragment()).commit();
+        } else if (id == R.id.nav_camera) {
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new GPSFragment()).commit();
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
     }
 }
