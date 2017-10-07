@@ -61,15 +61,15 @@ public class NV21Image {
 
 		int f=farbe[1];
 
-		final int s= 60;
-		final int w=180;
+		final int s= 100;
+		final int w=250;
 
 		int durchschnitt=(Color.red(f)+Color.green(f)+Color.blue(f))/3;
-		if(Color.blue(f)- durchschnitt > 50) {
+		if(Color.blue(f)- durchschnitt > 40) {
 			return Farben.BLAU;
-		}else if(Y<100){
+		}else if(Y<s){
 			return Farben.SCHWARZ;
-		}else if(Y>300){
+		}else if(Y>w){
 			return Farben.WEIß;
 		}
 		return Farben.NULL;

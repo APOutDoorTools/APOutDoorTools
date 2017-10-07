@@ -1,15 +1,14 @@
 package ml.p_seminar.apoutdoortools;
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * Created by lthyr_000 on 26.09.2017.
@@ -19,11 +18,10 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
     private View view;
     private CameraView cameraView;
     public static nubibusmeterFragment fragment;
-    private int anInt=0;
     private Handler h;
     private Runnable r;
     private NV21Image bild;
-    private final int pxlgp=5;
+    private final int pxlgp=10;
     private int w=0;
     private int s=0;
     private int b=0;
@@ -93,23 +91,20 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
                 }
             }
         }
-        int pg=w+b+s+n;
-        anInt++;
-        if(anInt>10){
-            anInt=0;
-            Log.e("erster Pixel NV21","Y "+data[0]+" Cr "+data[1]+" Cb "+data[2]);
-            int[] x=bild.holePixel(0,0);
-            Log.e("erster Pixel RGB",""+ Color.red(x[1])+" "+Color.green(x[1])+" "+Color.blue(x[1]));
-            Log.e("weißanteil: ",""+w/pg+"%");
-            Log.e("blauanteil: ",""+b/pg+"%");
-            Log.e("schwarzanteil: ",""+s/pg+"%");
-            Log.e("nullanteil: ",""+n/pg+"%");
-            Log.e("--------------","--------------");
-        }
+        anteilanzeigen(w,b,s,n);
 
         cameraView.setOneShotPreview(this);
     }
 
+    private void anteilanzeigen(int w,int b,int s,int nul) {
+        int pg=w+b+s+nul;
+        TextView textView=(TextView)view.findViewById(R.id.anteile);
+        String t= "Weißanteil: "+w*100/pg+"% \n " +
+                "Blauanteil: "+b*100/pg+"% \n " +
+                "Schwarzanteil: "+s*100/pg+"% \n " +
+                "Nullanteil: "+nul*100/pg+"%";
+        textView.setText(t);
+    }
 
     private nubibusmeterFragment getInstance(){
         return this;
