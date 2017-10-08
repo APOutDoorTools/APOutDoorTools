@@ -19,7 +19,7 @@
         android:layout_margin="10dp"
         android:padding="10dp"
         android:background="@android:color/background_light"
-        android:lines="4"
+        android:lines="6"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/background_dark" />
 
@@ -30,7 +30,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:onClick="switchCam"
         app:srcCompat="@mipmap/cam_switch" />
 
 

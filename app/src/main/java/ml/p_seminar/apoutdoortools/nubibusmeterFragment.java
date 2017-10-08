@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by lthyr_000 on 26.09.2017.
@@ -47,6 +48,7 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
         Runnable r2=new Runnable() {
             @Override
             public void run() {
+                Toast.makeText(getActivity(),"Berühren --> Auswertung pausieren.",Toast.LENGTH_LONG).show();
                 RotateAnimation rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
                 rotate.setDuration(800);
 
@@ -113,12 +115,31 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
 
     private void anteilanzeigen(int w,int b,int s,int nul) {
         int pg=w+b+s+nul;
+
+        int bewoelkung=bewoelkungberechnen(w,b,s,nul);
+        String bewoelkungsstring="";
+
+        bewoelkungsstring = bewoelkung < 25 ? "kaum bewölkt."
+                : bewoelkung < 50 ? "etwas bewölkt."
+                : bewoelkung < 75 ? "bewölkt"
+                : bewoelkung < 100 ? "stark bewölkt."
+                : "Log.wtf(\"Was ist jetzt los!? Ich sehe nichts!\")";
+
         TextView textView=(TextView)view.findViewById(R.id.anteile);
         String t= "Weißanteil: "+w*100/pg+"% \n" +
                 "Blauanteil: "+b*100/pg+"% \n" +
                 "Schwarzanteil: "+s*100/pg+"% \n" +
-                "Nullanteil: "+nul*100/pg+"%";
+                "Nullanteil: "+nul*100/pg+"% \n"+
+                "Bewölkung: "+ bewoelkung+"% \n"+
+                bewoelkungsstring;
         textView.setText(t);
+    }
+
+    private int bewoelkungberechnen(int w,int b,int s,int nul){
+        int wolken=w+s;
+        int himmel=w+s+b+nul;
+
+        return wolken*100/himmel;
     }
 
     private nubibusmeterFragment getInstance(){

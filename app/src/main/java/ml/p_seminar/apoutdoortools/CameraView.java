@@ -5,6 +5,7 @@ import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -49,6 +50,28 @@ private boolean switchcam=false;
                 switchcam=true;
             }
         });
+        this.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        touch = true;
+                        break;
+
+                    case MotionEvent.ACTION_MOVE:
+                        // touch move code
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        touch=false;
+                        setOneShotPreview(cb);
+                        break;
+                }
+                return true;
+
+            }
+        });
+
         camera = Camera.open(MainActivity.cam);
 
         camera.setDisplayOrientation(90);
@@ -99,10 +122,12 @@ private boolean switchcam=false;
         camera = null;
     }
 
+    private boolean touch;
+    private Camera.PreviewCallback cb=null;
     public void setOneShotPreview(Camera.PreviewCallback callback) {
-        if(camera!=null) {
+        cb=callback;
+        if(camera!=null && !touch) {
             //Log.d("DEBUG","setOneShotPreviewCallback");
-
             if(switchcam){
                 switchcam=false;
                 switchCam();
