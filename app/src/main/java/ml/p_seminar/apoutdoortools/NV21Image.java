@@ -2,6 +2,7 @@ package ml.p_seminar.apoutdoortools;
 
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.util.Log;
 
 public class NV21Image {
 
@@ -53,7 +54,7 @@ public class NV21Image {
 
 	public Farben istPixelFarbig(int x, int y) {
 		int[] farbe= holePixel(x, y);
-		int Y=farbe[0]*2;
+		int Y=farbe[0];
 
 		if (farbe[0]==-1){
 			return Farben.NULL;
@@ -61,11 +62,11 @@ public class NV21Image {
 
 		int f=farbe[1];
 
-		final int s= 100;
-		final int w=250;
+		final int s= 40;
+		final int w=100;
 
 		int durchschnitt=(Color.red(f)+Color.green(f)+Color.blue(f))/3;
-		if(Color.blue(f)- durchschnitt > 40) {
+		if((Color.blue(f) > 170 && Color.blue(f)- durchschnitt > 10) || (Color.blue(f)- durchschnitt > 50)) {
 			return Farben.BLAU;
 		}else if(Y<s){
 			return Farben.SCHWARZ;
