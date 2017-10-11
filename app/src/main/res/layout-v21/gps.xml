@@ -11,10 +11,7 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        tools:layout_editor_absoluteY="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,23 +62,21 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.96"
-            android:text="ERWEITERTER MODUS"
+            android:text="Erweiterte Informationen"
             tools:layout_editor_absoluteX="84dp"
             tools:layout_editor_absoluteY="65dp" />
 
     </LinearLayout>
-
     <Button
         android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Position Anfragen"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="12dp"
-        android:text="Position Anfragen" />
-
+        android:layout_marginBottom="12dp" />
+    
 
     <SeekBar
         android:id="@+id/seekBar"

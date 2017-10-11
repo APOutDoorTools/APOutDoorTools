@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.DecimalFormat;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,13 +23,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import ml.p_seminar.apoutdoortools.R;
 
 import static android.content.Context.LOCATION_SERVICE;
 
 
 public class GPSFragment extends Fragment{
-    private Button button;
-    private TextView textView;
+
+    private Button button;                      //Knopf der GPS startet
+    private TextView textView;                  //TextView Rechts
+    private TextView Ergebnisse;
+    private TextView info;
+
+    private Button erweitert;
 
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -36,24 +43,22 @@ public class GPSFragment extends Fragment{
 
     private View view = null;
     private SeekBar seekBar;
+
     private int benachrichtigungsintervall;
+    private double laenge;
+    private double breite;
+    private double hoehe;
+    private float genauigkeit;
+    private int zustandDaten;
+    private String provider;
 
     @Override
-   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
+    {
         super.onCreateView(inflater, container,savedInstanceState);
         view=inflater.inflate(R.layout.gps,container,false);
 
-        benachrichtigungsintervall =-1;
-
-        zustand=0;
-
-        button = (Button) view.findViewById(R.id.button);
-
-        textView=(TextView) view.findViewById(R.id.textView);
-        textView.setText("Koordinaten:");
-        textView.setTextSize(20);
-
-
+        initAnzeige();
         setSeekBarInit();
         locationManagerInit();
         return view;
@@ -71,18 +76,41 @@ public class GPSFragment extends Fragment{
         }
     }
 
-    private void knopfInitialisieren()
-    {
+    private void knopfInitialisieren() {
 
         View.OnClickListener onClick = new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                knopfdruck();
+                switch(view.getId())
+                {
+                    case R.id.button: knopfdruck(); break;
+                    case R.id.erweitert:
+                        if(zustandDaten==0)
+                        {
+                            zustandDaten=1;
+                            erweitert.setText("erweiterter Modus");
+                            Ergebnisse.setTextSize(20);
+                            textView.setTextSize(20);
+                            textView.setText("Koordinaten:\nLängengrad: \nBreitengrad:\nHöhe über Normal Null:");
+                            Ergebnisse.setText("\n__\n__\n__");
+                        }
+                        else
+                        {
+                            zustandDaten=0;
+                            erweitert.setText("einfacher Modus");
+                            Ergebnisse.setTextSize(15);
+                            textView.setTextSize(15);
+                            textView.setText("Koordinaten:\nLängengrad: \nBreitengrad:\nHöhe über Normal Null:\nSignal:");
+                            Ergebnisse.setText("\n__\n__\n__\n__");
+                        }
+                        break;
+                }
             }
         };
         button.setOnClickListener(onClick);
+        erweitert.setOnClickListener(onClick);
 
     }
 
@@ -189,6 +217,10 @@ public class GPSFragment extends Fragment{
 
                         String s=eingabe.getText().toString();
                         benachrichtigungsintervall =Integer.valueOf(s);
+                        if(benachrichtigungsintervall>=2000)
+                        {
+                            benachrichtigungsintervall=2000;
+                        }
                         TextView g=(TextView) view.findViewById(R.id.text1);
                         g.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
                     }
@@ -203,7 +235,33 @@ public class GPSFragment extends Fragment{
 
     }
 
-    private void locationManagerInit(){
+    public void initAnzeige() {
+        benachrichtigungsintervall =-1;
+        zustand=0;
+        laenge=0;
+        breite=0;
+        hoehe=0;
+        genauigkeit=0;
+        zustandDaten=0;
+
+        button = (Button) view.findViewById(R.id.button);
+        erweitert = (Button) view.findViewById(R.id.erweitert);
+
+        textView=(TextView) view.findViewById(R.id.textView);
+        textView.setText("Koordinaten:\nLängengrad: \nBreitengrad:\nHöhe über Normal Null:");
+        textView.setTextSize(20);
+
+        Ergebnisse = (TextView) view.findViewById(R.id.Ergebnisse);
+        Ergebnisse.setText("\n__\n__\n__");
+        Ergebnisse.setTextSize(20);
+
+        info = (TextView) view.findViewById(R.id.info);
+        info.setText("Genauigkeit in Metern: -");
+        info.setTextSize(10);
+    }
+
+    private void locationManagerInit()
+    {
         locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
         locationListener = new LocationListener()
@@ -213,9 +271,22 @@ public class GPSFragment extends Fragment{
             {
                 Log.e("debug","neue position");
 
+                laenge=location.getLatitude();
+                breite= location.getLongitude();
+                hoehe=location.getAltitude();
+                genauigkeit= location.getAccuracy();
+                provider= location.getProvider();
+                //location.get
 
-
-                textView.setText("Koordinaten\n\n "+location.getLatitude()+ "\n" + location.getLongitude() + "\nProvider:\t" + location.getProvider() + "\nHöhe:\t" + location.getAltitude() + "\nGenauigkeit:\t" + location.getAccuracy()+" mögliche Abweichung in Metern\n");
+                if(zustandDaten==0)
+                {
+                    datenEinfach();
+                }
+                else
+                {
+                    datenGenau();
+                }
+                //textView.setText("Koordinaten\n\n "+location.getLatitude()+ "\n" + location.getLongitude() + "\nProvider:\t" + location.getProvider() + "\nHöhe:\t" + location.getAltitude() + "\nGenauigkeit:\t" + location.getAccuracy()+" mögliche Abweichung in Metern\n");
             }
 
             @Override
@@ -269,6 +340,25 @@ public class GPSFragment extends Fragment{
         }
     }
 
+    private void datenGenau()
+    {
+        laenge=laenge*100;
+        laenge=Math.round(laenge);
+        laenge=laenge/100;
+
+        breite=breite*100;
+        breite=Math.round(laenge);
+        breite=breite/100;
+
+        Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe);
+        info.setText("Genauigkeit in Metern: "+genauigkeit);
+    }
+
+    private void datenEinfach()
+    {
+        Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe+"\n"+provider);
+        info.setText("Genauigkeit in Metern: "+genauigkeit);;
+    }
 }
 
 
