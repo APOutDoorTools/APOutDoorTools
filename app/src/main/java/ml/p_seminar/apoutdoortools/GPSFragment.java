@@ -23,6 +23,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import ml.p_seminar.apoutdoortools.R;
 
 import static android.content.Context.LOCATION_SERVICE;
@@ -51,6 +53,10 @@ public class GPSFragment extends Fragment{
     private float genauigkeit;
     private int zustandDaten;
     private String provider;
+    private int fixierungStart;
+
+    private double starthoehe;
+    private double zwischenhoehe;
 
     @Override
    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
@@ -76,7 +82,8 @@ public class GPSFragment extends Fragment{
         }
     }
 
-    private void knopfInitialisieren() {
+    private void knopfInitialisieren()
+    {
 
         View.OnClickListener onClick = new View.OnClickListener()
         {
@@ -114,7 +121,8 @@ public class GPSFragment extends Fragment{
 
     }
 
-    private void knopfdruck(){
+    private void knopfdruck()
+    {
         if(zustand==0)
         {
             button.setText("Stop");
@@ -134,7 +142,8 @@ public class GPSFragment extends Fragment{
         }
     }
 
-    private void setSeekBarInit(){
+    private void setSeekBarInit()
+    {
         seekBar=(SeekBar) view.findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -200,7 +209,8 @@ public class GPSFragment extends Fragment{
         });
     }
 
-    private void dialogmethode() {
+    private void dialogmethode()
+    {
         AlertDialog.Builder builder;
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder = new AlertDialog.Builder(getActivity());
@@ -235,7 +245,8 @@ public class GPSFragment extends Fragment{
 
     }
 
-    public void initAnzeige() {
+    public void initAnzeige()
+    {
         benachrichtigungsintervall =-1;
         zustand=0;
         laenge=0;
@@ -243,6 +254,9 @@ public class GPSFragment extends Fragment{
         hoehe=0;
         genauigkeit=0;
         zustandDaten=0;
+        starthoehe=0;
+        zwischenhoehe=0;
+        fixierungStart=0;
 
         button = (Button) view.findViewById(R.id.button);
         erweitert = (Button) view.findViewById(R.id.erweitert);
@@ -271,12 +285,26 @@ public class GPSFragment extends Fragment{
             {
                 Log.e("debug","neue position");
 
+
                 laenge=location.getLatitude();
                 breite= location.getLongitude();
                 hoehe=location.getAltitude();
                 genauigkeit= location.getAccuracy();
                 provider= location.getProvider();
-                //location.get
+
+                if(fixierungStart==20)          //nötig, da die ersten Werte nicht sehr genau sind (Abweichungen von 50-60Metern)
+                {
+                    zwischenhoehe=hoehe;
+
+                    starthoehe=hoehe;
+                    starthoehe=starthoehe*100;
+                    starthoehe=Math.round(starthoehe);
+                    starthoehe=starthoehe/100;
+                    Toast.makeText(getActivity(),"Starthöhe: "+starthoehe+"m.",Toast.LENGTH_LONG).show();
+
+                }
+
+                fixierungStart++;
 
                 if(zustandDaten==0)
                 {
@@ -342,6 +370,7 @@ public class GPSFragment extends Fragment{
 
     private void datenGenau()
     {
+        double hoehendifferenz;
         laenge=laenge*100;
         laenge=Math.round(laenge);
         laenge=laenge/100;
@@ -350,12 +379,38 @@ public class GPSFragment extends Fragment{
         breite=Math.round(laenge);
         breite=breite/100;
 
+        hoehe=hoehe*100;
+        hoehe=Math.round(hoehe);
+        hoehe=hoehe/100;
+
+        hoehendifferenz=hoehe-zwischenhoehe;
+        if(benachrichtigungsintervall!=-1)
+        {
+            if (hoehendifferenz >= benachrichtigungsintervall || hoehendifferenz <= 0 - benachrichtigungsintervall)
+            {
+                Toast.makeText(getActivity(), "Höhe erreicht", Toast.LENGTH_LONG).show();
+                zwischenhoehe = hoehe;//Benachrichtigung hier einfügen
+            }
+        }
+
         Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe);
         info.setText("Genauigkeit in Metern: "+genauigkeit);
     }
 
     private void datenEinfach()
     {
+        double hoehendifferenz;
+
+        hoehendifferenz=hoehe-zwischenhoehe;
+        if(benachrichtigungsintervall!=-1)
+        {
+            if (hoehendifferenz >= benachrichtigungsintervall || hoehendifferenz <= 0 - benachrichtigungsintervall)
+            {
+                Toast.makeText(getActivity(), "Höhe erreicht", Toast.LENGTH_LONG).show();
+                zwischenhoehe = hoehe;//Benachrichtigung hier einfügen
+            }
+        }
+
         Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe+"\n"+provider);
         info.setText("Genauigkeit in Metern: "+genauigkeit);;
     }
