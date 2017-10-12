@@ -8,4 +8,26 @@
 
     <string name="navHeadertext">Alpines Praktikum OutDoor Tools</string>
     <string name="mail">support: info@p-seminar.ml</string>
+
+
+    <string name="Text_einfach">Koordinaten: \nLängengrad:  \nBreitengrad: \nHöhe über Normal Null:</string>
+    <string name="Genauigkeit_Text">Genauigkeit in Metern: -</string>
+    <string name="drei_Platzhalter">- -</string>
+    <string name="erweitert_Modus_Text">erweiterter Modus</string>
+    <string name="platzhalter_drei">- - -</string>
+    <string name="vier_Platzhalter">-\n-\n-\n-</string>
+    <string name="text_erweitert">Koordinaten: Längengrad:  Breitengrad: Höhe über Normal Null: Signal:</string>
+    <string name="stop">Stop</string>
+    <string name="Signal_wird_gesucht">GPS Signal wird gesucht</string>
+    <string name="Koordinaten">Koordinaten</string>
+    <string name="position_anfragen">Position Anfragen</string>
+    <string name="Bintervall_aus">Benachrichtigungsintervall: aus</string>
+    <string name="Bintervall_custom">Benachrichtigungsintervall: custom</string>
+    <string name="bintervall">Benachrichtigungsintervall:</string>
+    <string name="Bntervall_aendern">Benachrichtigungsdifferenz ändern</string>
+    <string name="Starthoehe">Starthöhe:</string>
+    <string name="Meter">m.</string>
+    <string name="GPS_aktivieren">Activate GPS</string>
+    <string name="Aktivieren_Sie_GPS">Aktivieren Sie GPS!</string>
+    <string name="Zugriff_verweigert">GPS Zugriff verweigert</string>
 </resources>

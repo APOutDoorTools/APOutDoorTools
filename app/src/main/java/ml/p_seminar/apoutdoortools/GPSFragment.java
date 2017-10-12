@@ -102,11 +102,11 @@ public class GPSFragment extends Fragment{
                         if(zustandDaten==0)
                         {
                             zustandDaten=1;
-                            erweitert.setText("erweiterter Modus");
+                            erweitert.setText(R.string.erweitert_Modus_Text);
                             Ergebnisse.setTextSize(20);
                             textView.setTextSize(20);
-                            textView.setText("Koordinaten:\nLängengrad: \nBreitengrad:\nHöhe über Normal Null:");
-                            Ergebnisse.setText("\n__\n__\n__");
+                            textView.setText(R.string.Text_einfach);
+                            Ergebnisse.setText(R.string.drei_Platzhalter);
                         }
                         else
                         {
@@ -114,8 +114,9 @@ public class GPSFragment extends Fragment{
                             erweitert.setText("einfacher Modus");
                             Ergebnisse.setTextSize(15);
                             textView.setTextSize(15);
-                            textView.setText("Koordinaten:\nLängengrad: \nBreitengrad:\nHöhe über Normal Null:\nSignal:");
-                            Ergebnisse.setText("\n__\n__\n__\n__");
+
+                            textView.setText(R.string.text_erweitert);
+                            Ergebnisse.setText(R.string.vier_Platzhalter);
                         }
                         break;
                 }
@@ -130,8 +131,8 @@ public class GPSFragment extends Fragment{
     {
         if(zustand==0)
         {
-            button.setText("Stop");
-            textView.setText("GPS Signal wird gesucht");
+            button.setText(R.string.stop);
+            textView.setText(R.string.Signal_wird_gesucht);
             //noinspection MissingPermission
             locationManager.requestLocationUpdates("gps", 500, 0, locationListener); //(wodurch das Signal zur verfügung gestellt wird, Zeit in Millisekunden, nach der der Standrt erneut überprüft werden soll,Distanz in Metern, nach der der Standort erneut überprüft werden soll)
             zustand=1;
@@ -139,8 +140,8 @@ public class GPSFragment extends Fragment{
         }
         else
         {
-            button.setText("Position Anfragen");
-            textView.setText("Koordinaten");
+            button.setText(R.string.position_anfragen);
+            textView.setText(R.string.Koordinaten);
             locationManager.removeUpdates(locationListener);
             zustand=0;
             Log.d("d","stop");
@@ -158,7 +159,7 @@ public class GPSFragment extends Fragment{
                     case 0:
                         benachrichtigungsintervall = -1;
                         TextView tvi = (TextView)view.findViewById(R.id.text1);
-                        tvi.setText("Benachrichtigungsintervall: aus");
+                        tvi.setText(R.string.Bintervall_aus);
                         break;
                     case 1:
                         benachrichtigungsintervall = 10;
@@ -186,14 +187,14 @@ public class GPSFragment extends Fragment{
                         break;
                     case 9:
                         TextView tve = (TextView)view.findViewById(R.id.text1);
-                        tve.setText("Benachrichtigungsintervall: custom");
+                        tve.setText(R.string.Bintervall_custom);
                         break;
                     default:
                         benachrichtigungsintervall =1;
                 }
                 TextView tv = (TextView)view.findViewById(R.id.text1);
 
-                if(progress!=0 && progress!=9)tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
+                if(progress!=0 && progress!=9)tv.setText(getString(R.string.bintervall)+benachrichtigungsintervall);
             }
 
             @Override
@@ -210,7 +211,7 @@ public class GPSFragment extends Fragment{
                         break;
                 }
                 TextView tv = (TextView)view.findViewById(R.id.text1);
-                if(seekBar.getProgress()!=0 && seekBar.getProgress()!=9)tv.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
+                if(seekBar.getProgress()!=0 && seekBar.getProgress()!=9)tv.setText(getString(R.string.bintervall)+benachrichtigungsintervall);
             }
         });
     }
@@ -222,11 +223,11 @@ public class GPSFragment extends Fragment{
         builder = new AlertDialog.Builder(getActivity());
 
 
-        builder.setTitle("Benachrichtigungsdifferenz ändern");
+        builder.setTitle(R.string.Bntervall_aendern);
         final View customView = inflater.inflate(R.layout.custom_dialog, null);
 
      builder.setView(customView)
-                .setMessage("Benachrichtigungsdifferenz ändern")
+                .setMessage(R.string.Bntervall_aendern)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         EditText eingabe=(EditText)customView.findViewById(R.id.zahleingabe);
@@ -238,7 +239,7 @@ public class GPSFragment extends Fragment{
                             benachrichtigungsintervall=2000;
                         }
                         TextView g=(TextView) view.findViewById(R.id.text1);
-                        g.setText("Benachrichtigungsintervall: "+benachrichtigungsintervall);
+                        g.setText(getString(R.string.bintervall)+benachrichtigungsintervall);
                     }
                 })
                 .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -251,7 +252,7 @@ public class GPSFragment extends Fragment{
 
     }
 
-    public void initAnzeige()
+    private void initAnzeige()
     {
         benachrichtigungsintervall =-1;
         zustand=0;
@@ -268,16 +269,16 @@ public class GPSFragment extends Fragment{
         erweitert = (Button) view.findViewById(R.id.erweitert);
 
         textView=(TextView) view.findViewById(R.id.textView);
-        textView.setText("Koordinaten:\nLängengrad: \nBreitengrad:\nHöhe über Normal Null:");
+        textView.setText(R.string.Text_einfach);
         textView.setTextSize(20);
 
         Ergebnisse = (TextView) view.findViewById(R.id.Ergebnisse);
-        Ergebnisse.setText("\n__\n__\n__");
+        Ergebnisse.setText(R.string.drei_Platzhalter);
         Ergebnisse.setTextSize(20);
         //Ergebnisse.setGravity();
 
         info = (TextView) view.findViewById(R.id.info);
-        info.setText("Genauigkeit in Metern: -");
+        info.setText(R.string.Genauigkeit_Text);
         info.setTextSize(10);
 
         vibrator=(Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
@@ -309,7 +310,7 @@ public class GPSFragment extends Fragment{
                     starthoehe=starthoehe*100;
                     starthoehe=Math.round(starthoehe);
                     starthoehe=starthoehe/100;
-                    Toast.makeText(getActivity(),"Starthöhe: "+starthoehe+"m.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),getString(R.string.Starthoehe)+starthoehe+getString(R.string.Meter),Toast.LENGTH_LONG).show();
 
                 }
 
@@ -342,8 +343,8 @@ public class GPSFragment extends Fragment{
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(getActivity());
 
-                builder.setTitle("Activate GPS")
-                        .setMessage("Aktivieren Sie GPS!")
+                builder.setTitle(R.string.GPS_aktivieren)
+                        .setMessage(R.string.Aktivieren_Sie_GPS)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.e("D","INTENT hilfe");
@@ -355,7 +356,7 @@ public class GPSFragment extends Fragment{
                             public void onClick(DialogInterface dialog, int which) {
                                 zustand=1;
                                 knopfdruck();
-                                textView.setText("GPS Zugriff verweigert");
+                                textView.setText(R.string.Zugriff_verweigert);
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
