@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import ml.p_seminar.apoutdoortools.R;
 
 import static android.content.Context.LOCATION_SERVICE;
+import static android.content.Context.VIBRATOR_SERVICE;
 
 
 public class GPSFragment extends Fragment{
@@ -45,6 +47,8 @@ public class GPSFragment extends Fragment{
 
     private View view = null;
     private SeekBar seekBar;
+
+    private Vibrator vibrator;
 
     private int benachrichtigungsintervall;
     private double laenge;
@@ -92,8 +96,9 @@ public class GPSFragment extends Fragment{
             {
                 switch(view.getId())
                 {
-                    case R.id.button: knopfdruck(); break;
+                    case R.id.button: vibrator.vibrate(100); knopfdruck(); break;
                     case R.id.erweitert:
+                        vibrator.vibrate(100);
                         if(zustandDaten==0)
                         {
                             zustandDaten=1;
@@ -148,6 +153,7 @@ public class GPSFragment extends Fragment{
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                vibrator.vibrate(5);
                 switch (progress){
                     case 0:
                         benachrichtigungsintervall = -1;
@@ -268,10 +274,13 @@ public class GPSFragment extends Fragment{
         Ergebnisse = (TextView) view.findViewById(R.id.Ergebnisse);
         Ergebnisse.setText("\n__\n__\n__");
         Ergebnisse.setTextSize(20);
+        //Ergebnisse.setGravity();
 
         info = (TextView) view.findViewById(R.id.info);
         info.setText("Genauigkeit in Metern: -");
         info.setTextSize(10);
+
+        vibrator=(Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
     }
 
     private void locationManagerInit()
@@ -390,6 +399,7 @@ public class GPSFragment extends Fragment{
             {
                 Toast.makeText(getActivity(), "Höhe erreicht", Toast.LENGTH_LONG).show();
                 zwischenhoehe = hoehe;//Benachrichtigung hier einfügen
+                vibrator.vibrate(1000);
             }
         }
 
