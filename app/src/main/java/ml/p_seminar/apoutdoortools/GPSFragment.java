@@ -7,7 +7,6 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.icu.text.DecimalFormat;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,8 +24,6 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import ml.p_seminar.apoutdoortools.R;
 
 import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
@@ -96,7 +93,7 @@ public class GPSFragment extends Fragment{
             {
                 switch(view.getId())
                 {
-                    case R.id.button: vibrator.vibrate(100); knopfdruck(); break;
+                    case R.id.posAnfragen: vibrator.vibrate(100); knopfdruck(); break;
                     case R.id.erweitert:
                         vibrator.vibrate(100);
                         if(zustandDaten==0)
@@ -265,7 +262,7 @@ public class GPSFragment extends Fragment{
         zwischenhoehe=0;
         fixierungStart=0;
 
-        button = (Button) view.findViewById(R.id.button);
+        button = (Button) view.findViewById(R.id.posAnfragen);
         erweitert = (Button) view.findViewById(R.id.erweitert);
 
         textView=(TextView) view.findViewById(R.id.textView);

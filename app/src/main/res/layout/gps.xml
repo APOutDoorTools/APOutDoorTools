@@ -15,7 +15,7 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
         android:layout_marginTop="15dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout">
+        android:id="@+id/oben">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,16 +69,16 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.96"
-        android:text="ERWEITERTER MODUS"
+        android:text="ERWEITERODUS"
         tools:layout_editor_absoluteX="84dp"
         tools:layout_editor_absoluteY="65dp"
         android:layout_marginTop="78dp"
-        android:layout_below="@+id/linearLayout"
+        android:layout_below="@+id/oben"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/posAnfragen"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
         android:layout_marginBottom="22dp"
         android:max="9"
         android:progress="0"
-        android:layout_above="@+id/button"
+        android:layout_above="@+id/posAnfragen"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView" />
 
