@@ -191,7 +191,7 @@ public class GPSFragment extends Fragment{
                 }
                 TextView tv = (TextView)view.findViewById(R.id.text1);
 
-                if(progress!=0 && progress!=9)tv.setText(getString(R.string.bintervall)+benachrichtigungsintervall);
+                if(progress!=0 && progress!=9)tv.setText(getString(R.string.bintervall)+" "+benachrichtigungsintervall+"m");
             }
 
             @Override
