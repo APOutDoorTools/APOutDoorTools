@@ -98,7 +98,7 @@
 
             <Button
                 android:id="@+id/erweitert"
-                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                style="@android:style/Widget.Button"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -106,6 +106,7 @@
                 android:layout_below="@+id/oben"
                 android:layout_weight="2"
                 android:text="ERWEITERTER MODUS"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
                 tools:layout_editor_absoluteX="84dp"
                 tools:layout_editor_absoluteY="65dp" />
 
@@ -132,6 +133,7 @@
                 <Button
                     android:id="@+id/posAnfragen"
 
+                    style="@android:style/Widget.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -139,7 +141,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_marginBottom="12dp"
                     android:layout_weight="0.96"
-                    android:text="Position Anfragen" />
+                    android:text="Position Anfragen"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button" />
 
                 <SeekBar
                     android:id="@+id/seekBar"

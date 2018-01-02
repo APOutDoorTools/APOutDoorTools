@@ -109,6 +109,7 @@ public class GPSFragment extends Fragment{
                         vibrator.vibrate(100);
                         if(zustandDaten==0)
                         {
+                            Toast.makeText(getActivity(),"Werte gerundet",Toast.LENGTH_SHORT).show();
                             zustandDaten=1;
                             erweitert.setText(R.string.erweitert_Modus_Text);
                             Ergebnisse.setTextSize(20);
@@ -118,10 +119,11 @@ public class GPSFragment extends Fragment{
                         }
                         else
                         {
+                            Toast.makeText(getActivity(),"genaue Werte",Toast.LENGTH_SHORT).show();
                             zustandDaten=0;
                             erweitert.setText("einfacher Modus");
-                            Ergebnisse.setTextSize(15);
-                            textView.setTextSize(15);
+                            Ergebnisse.setTextSize(20);
+                            textView.setTextSize(20);
 
                             textView.setText(R.string.text_erweitert);
                             Ergebnisse.setText(R.string.vier_Platzhalter);
@@ -332,6 +334,7 @@ public class GPSFragment extends Fragment{
                 {
                     if(fixierungStart==20)
                     {
+                        xPosGraph=0;
                         zwischenhoehe=hoehe;
 
                         starthoehe=hoehe;
@@ -339,7 +342,7 @@ public class GPSFragment extends Fragment{
                         starthoehe=Math.round(starthoehe);
                         starthoehe=starthoehe/100;
                         Toast.makeText(getActivity(),getString(R.string.Starthoehe)+starthoehe+getString(R.string.Meter),Toast.LENGTH_LONG).show();
-                        series.appendData(new DataPoint(xPosGraph,0),true,500);
+                        series.appendData(new DataPoint(xPosGraph,0),true,xPosGraph+1);
                         xPosGraph++;
                     }
                     fixierungStart++;
@@ -357,9 +360,8 @@ public class GPSFragment extends Fragment{
                         datenGraphZaehler=0;
                         datenGraphDurchschnitt=datenGraphDurchschnitt/10;
                         datenGraphDurchschnitt=datenGraphDurchschnitt-starthoehe;
-                        series.appendData(new DataPoint(xPosGraph,datenGraphDurchschnitt),true,500);            //eventuell noch die 500 auf einen Variablen wert legen,sodass es unendlich lange laufen kann
+                        series.appendData(new DataPoint(xPosGraph,datenGraphDurchschnitt),true,xPosGraph+1);            //eventuell noch die 500 auf einen Variablen wert legen,sodass es unendlich lange laufen kann
                         xPosGraph++;
-
                     }
                 }
 
