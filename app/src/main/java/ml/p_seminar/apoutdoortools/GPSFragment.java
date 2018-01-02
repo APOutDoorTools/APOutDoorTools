@@ -25,6 +25,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -55,6 +59,13 @@ public class GPSFragment extends Fragment{
     private int zustandDaten;
     private String provider;
     private int fixierungStart;
+    private int zaehlerMessungen;               //Verwendet um aus zehn Messungen den Durchschnittswert zu bilden, der dann im Diagramm angezeigt wird.
+    private LineGraphSeries<DataPoint> series;
+    private double[] datenGraph;
+    private double datenGraphDurchschnitt;
+    private int datenGraphZaehler;
+    private int xPosGraph;
+    private GraphView graph;
 
     private double starthoehe;
     private double zwischenhoehe;
@@ -131,7 +142,7 @@ public class GPSFragment extends Fragment{
             button.setText(R.string.stop);
             textView.setText(R.string.Signal_wird_gesucht);
             //noinspection MissingPermission
-            locationManager.requestLocationUpdates("gps", 500, 0, locationListener); //(wodurch das Signal zur verfügung gestellt wird, Zeit in Millisekunden, nach der der Standrt erneut überprüft werden soll,Distanz in Metern, nach der der Standort erneut überprüft werden soll)
+            locationManager.requestLocationUpdates("gps", 2000, 10, locationListener);//Fehlermeldung nicht relevant, da der geforderte "permission check" seperat geprüft wird.
             zustand=1;
             Log.d("d","position angefragt");
         }
@@ -251,6 +262,8 @@ public class GPSFragment extends Fragment{
 
     private void initAnzeige()
     {
+        int i=0;
+
         benachrichtigungsintervall =-1;
         zustand=0;
         laenge=0;
@@ -261,6 +274,19 @@ public class GPSFragment extends Fragment{
         starthoehe=0;
         zwischenhoehe=0;
         fixierungStart=0;
+        datenGraphZaehler=0;
+        datenGraphDurchschnitt=0;
+        xPosGraph=0;
+        series=new LineGraphSeries<DataPoint>();
+
+        datenGraph= new double[10];
+        for(i=0;i<10;i++)
+        {
+            datenGraph[i]=0;
+        }
+
+        graph=(GraphView)view.findViewById(R.id.graph);
+        graph.addSeries(series);
 
         button = (Button) view.findViewById(R.id.posAnfragen);
         erweitert = (Button) view.findViewById(R.id.erweitert);
@@ -283,6 +309,8 @@ public class GPSFragment extends Fragment{
 
     private void locationManagerInit()
     {
+
+
         locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
         locationListener = new LocationListener()
@@ -290,7 +318,8 @@ public class GPSFragment extends Fragment{
             @Override
             public void onLocationChanged(Location location)
             {
-                Log.e("debug","neue position");
+                int i=0;
+                //Log.e("debug","neue position");
 
 
                 laenge=location.getLatitude();
@@ -299,19 +328,42 @@ public class GPSFragment extends Fragment{
                 genauigkeit= location.getAccuracy();
                 provider= location.getProvider();
 
-                if(fixierungStart==20)          //nötig, da die ersten Werte nicht sehr genau sind (Abweichungen von 50-60Metern)
+                if(fixierungStart<=20)          //nötig, da die ersten Werte nicht sehr genau sind (Abweichungen von 50-60Metern vorkommen)
                 {
-                    zwischenhoehe=hoehe;
+                    if(fixierungStart==20)
+                    {
+                        zwischenhoehe=hoehe;
 
-                    starthoehe=hoehe;
-                    starthoehe=starthoehe*100;
-                    starthoehe=Math.round(starthoehe);
-                    starthoehe=starthoehe/100;
-                    Toast.makeText(getActivity(),getString(R.string.Starthoehe)+starthoehe+getString(R.string.Meter),Toast.LENGTH_LONG).show();
+                        starthoehe=hoehe;
+                        starthoehe=starthoehe*100;
+                        starthoehe=Math.round(starthoehe);
+                        starthoehe=starthoehe/100;
+                        Toast.makeText(getActivity(),getString(R.string.Starthoehe)+starthoehe+getString(R.string.Meter),Toast.LENGTH_LONG).show();
+                        series.appendData(new DataPoint(xPosGraph,0),true,500);
+                        xPosGraph++;
+                    }
+                    fixierungStart++;
+                }
+                else
+                {
+                    datenGraph[datenGraphZaehler]=hoehe;
+                    datenGraphZaehler++;
+                    if(datenGraphZaehler==10)
+                    {
+                        for(i=0;i<10;i++)
+                        {
+                            datenGraphDurchschnitt=datenGraphDurchschnitt+datenGraph[i];
+                        }
+                        datenGraphZaehler=0;
+                        datenGraphDurchschnitt=datenGraphDurchschnitt/10;
+                        datenGraphDurchschnitt=datenGraphDurchschnitt-starthoehe;
+                        series.appendData(new DataPoint(xPosGraph,datenGraphDurchschnitt),true,500);            //eventuell noch die 500 auf einen Variablen wert legen,sodass es unendlich lange laufen kann
+                        xPosGraph++;
 
+                    }
                 }
 
-                fixierungStart++;
+
 
                 if(zustandDaten==0)
                 {
