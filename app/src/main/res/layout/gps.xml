@@ -7,6 +7,30 @@ android:layout_height="match_parent"
 tools:context="ml.p_seminar.apoutdoortools.MainActivity">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/oben"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="8dp"
+                tools:layout_editor_absoluteY="8dp">
+
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="match_parent"
@@ -14,10 +38,140 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
                     android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="0.96"
-                    android:text="Fehler"
+                    android:text="Koordinaten"
                     app:layout_constraintLeft_toLeftOf="parent"
                     tools:layout_editor_absoluteY="-4dp" />
 
+                <TextView
+                    android:id="@+id/Ergebnisse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="TextView"
+                    app:layout_constraintLeft_toRightOf="@+id/Parameter"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:layout_editor_absoluteY="16dp" />
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_weight="1"
+                    android:text="Genauigkeit"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="45dp" />
+
+                <TextView
+                    android:id="@+id/tv_Genauigkeit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="-" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/unten"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
+
+
+            <Button
+                android:id="@+id/erweitert"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/oben"
+                android:layout_weight="2"
+                android:text="EINFACHER MODUS"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+                tools:layout_editor_absoluteX="84dp"
+                tools:layout_editor_absoluteY="65dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/graph"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/posAnfragen"
+
+                    style="@android:style/Widget.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="0.96"
+                    android:text="Position Anfragen"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button" />
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/posAnfragen"
+                    android:layout_alignLeft="@+id/textView"
+                    android:layout_alignStart="@+id/textView"
+                    android:layout_marginBottom="22dp"
+                    android:layout_weight="0.96"
+                    android:max="9"
+                    android:progress="0" />
+
+                <TextView
+                    android:id="@+id/text1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/seekBar"
+                    android:layout_alignLeft="@+id/seekBar"
+                    android:layout_alignStart="@+id/seekBar"
+                    android:layout_weight="0.96"
+                    android:text="Benachrichtigungsintervall: aus"
+                    android:textSize="20dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.widget.RelativeLayout>

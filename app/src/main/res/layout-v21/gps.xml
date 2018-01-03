@@ -105,7 +105,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/oben"
                 android:layout_weight="2"
-                android:text="ERWEITERTER MODUS"
+                android:text="EINFACHER MODUS"
                 android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
                 tools:layout_editor_absoluteX="84dp"
                 tools:layout_editor_absoluteY="65dp" />

@@ -142,9 +142,9 @@ public class GPSFragment extends Fragment{
         if(zustand==0)
         {
             button.setText(R.string.stop);
-            textView.setText(R.string.Signal_wird_gesucht);
+            //textView.setText(R.string.Signal_wird_gesucht);
             //noinspection MissingPermission
-            locationManager.requestLocationUpdates("gps", 2000, 10, locationListener);//Fehlermeldung nicht relevant, da der geforderte "permission check" seperat geprüft wird.
+            locationManager.requestLocationUpdates("gps", 100, 0, locationListener);//Fehlermeldung nicht relevant, da der geforderte "permission check" seperat geprüft wird.
             zustand=1;
             Log.d("d","position angefragt");
         }
@@ -294,13 +294,12 @@ public class GPSFragment extends Fragment{
         erweitert = (Button) view.findViewById(R.id.erweitert);
 
         textView=(TextView) view.findViewById(R.id.textView);
-        textView.setText(R.string.Text_einfach);
+        textView.setText(R.string.text_erweitert);
         textView.setTextSize(20);
 
         Ergebnisse = (TextView) view.findViewById(R.id.Ergebnisse);
-        Ergebnisse.setText(R.string.drei_Platzhalter);
+        Ergebnisse.setText(R.string.vier_Platzhalter);
         Ergebnisse.setTextSize(20);
-        //Ergebnisse.setGravity();
 
         info = (TextView) view.findViewById(R.id.info);
         info.setText(R.string.Genauigkeit_Text);
@@ -342,8 +341,10 @@ public class GPSFragment extends Fragment{
                         starthoehe=Math.round(starthoehe);
                         starthoehe=starthoehe/100;
                         Toast.makeText(getActivity(),getString(R.string.Starthoehe)+starthoehe+getString(R.string.Meter),Toast.LENGTH_LONG).show();
-                        series.appendData(new DataPoint(xPosGraph,0),true,xPosGraph+1);
-                        xPosGraph++;
+                        series.appendData(new DataPoint(xPosGraph,0),true,5000);
+                        //series.appendData(new DataPoint(1,1),true,5000);            //nur zu testzwecken
+                        graph.addSeries(series);
+                        xPosGraph=1;
                     }
                     fixierungStart++;
                 }
@@ -360,8 +361,9 @@ public class GPSFragment extends Fragment{
                         datenGraphZaehler=0;
                         datenGraphDurchschnitt=datenGraphDurchschnitt/10;
                         datenGraphDurchschnitt=datenGraphDurchschnitt-starthoehe;
-                        series.appendData(new DataPoint(xPosGraph,datenGraphDurchschnitt),true,xPosGraph+1);            //eventuell noch die 500 auf einen Variablen wert legen,sodass es unendlich lange laufen kann
+                        series.appendData(new DataPoint(xPosGraph,datenGraphDurchschnitt),true,5000);            //eventuell noch die 500 auf einen Variablen wert legen,sodass es unendlich lange laufen kann
                         xPosGraph++;
+                        graph.addSeries(series);
                     }
                 }
 
@@ -415,7 +417,7 @@ public class GPSFragment extends Fragment{
             }
         };
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)     //Hier wird geprüft, ob eine bestimmte SDK vorhanden ist.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
         {
             if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{
