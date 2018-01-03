@@ -144,7 +144,7 @@ public class GPSFragment extends Fragment{
             button.setText(R.string.stop);
             //textView.setText(R.string.Signal_wird_gesucht);
             //noinspection MissingPermission
-            locationManager.requestLocationUpdates("gps", 100, 0, locationListener);//Fehlermeldung nicht relevant, da der geforderte "permission check" seperat geprüft wird.
+            locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);//Fehlermeldung nicht relevant, da der geforderte "permission check" seperat geprüft wird.
             zustand=1;
             Log.d("d","position angefragt");
         }
