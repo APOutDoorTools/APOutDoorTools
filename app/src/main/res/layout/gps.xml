@@ -29,7 +29,8 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="8dp">
+                tools:layout_editor_absoluteY="8dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:id="@+id/textView"
@@ -61,7 +62,8 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_weight="3">
 
                 <TextView
                     android:id="@+id/info"
@@ -80,6 +82,8 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:gravity="right"
                     android:text="-" />
 
@@ -173,5 +177,6 @@ tools:context="ml.p_seminar.apoutdoortools.MainActivity">
         </LinearLayout>
 
     </LinearLayout>
+
 
 </android.widget.RelativeLayout>

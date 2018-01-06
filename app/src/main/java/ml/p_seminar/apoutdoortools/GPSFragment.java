@@ -1,6 +1,10 @@
 package ml.p_seminar.apoutdoortools;
 
 
+/**
+ * Diese Klasse ermöglicht die Positionsbestimmung und den Höhenmesser sowie dessen graphische Darstellung.
+ */
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -37,39 +41,44 @@ public class GPSFragment extends Fragment{
 
     private Button button;                      //Knopf der GPS startet
     private TextView textView;                  //TextView Rechts
-    private TextView Ergebnisse;
-    private TextView info;
+    private TextView Ergebnisse;                //TextView am linken Rand, die die ermittelten Werte anzeigt
+    private TextView info;                      //"Genauigkeit in Meter"
+    private TextView tv_Genauigkeit;            //TextView, die die Genauigkeit der Messdaten angibt
 
-    private Button erweitert;
+    private Button erweitert;                   //Knopf durch den sich die Koordinatenangaben entweder runden oder exakt ausgeben lassen können
 
-    private LocationManager locationManager;
+    private LocationManager locationManager;    //ermöglicht den Zugriff auf die GPS Ortung des Smartphones
     private LocationListener locationListener;
-    private int zustand;
+    private int zustand;                        //Bei einer Laufenden Höhenmessung: zustand = 1
 
     private View view = null;
-    private SeekBar seekBar;
+    private SeekBar seekBar;                    //liefert ganze Zahlen zwischen 0 und 8 um die Größe des Benachrichtigungsintervalles festzulegen
 
-    private Vibrator vibrator;
+    private Vibrator vibrator;                  //ermöglicht das Gerät auf Kommando vibrieren zu lassen
 
-    private int benachrichtigungsintervall;
-    private double laenge;
-    private double breite;
-    private double hoehe;
-    private float genauigkeit;
+    private int benachrichtigungsintervall;     //legt Höhe fest die ausgehend von der Starthöhe der Messung, zurückgelegt werden muss, bevor das Smartphone vibriert
+    private double laenge;                      //Längengrad
+    private double breite;                      //Breitengrad
+    private double hoehe;                       //Höhe über normal Null
+    private float genauigkeit;                  //Mögliche Abweichung der Messung von der atsächlichen Position in Metern
     private int zustandDaten;
-    private String provider;
-    private int fixierungStart;
+    private String provider;                    //Medium durch, das das Smartphone die Position bestimmen kann
+    private int fixierungStart;                 //Integer, der es ermöglicht die ersten 20 Messungen zu Überspringen und nicht die erste Messung als Startwert zu nehmen, da die ersten Messungen sehr ungenau sein können
     private int zaehlerMessungen;               //Verwendet um aus zehn Messungen den Durchschnittswert zu bilden, der dann im Diagramm angezeigt wird.
-    private LineGraphSeries<DataPoint> series;
-    private double[] datenGraph;
-    private double datenGraphDurchschnitt;
-    private int datenGraphZaehler;
-    private int xPosGraph;
-    private GraphView graph;
+    private LineGraphSeries<DataPoint> series;  //ermöglicht es Koordinatenpunkte(Datapoints) in sich zu speichern; kann als Graph angezeigt werden
+    private double[] datenGraph;                //enthält zehn Messugnen, aus denenein Durchschnitt berechnet wird, dieser wird im Koordinatensystem eingetragen
+    private double datenGraphDurchschnitt;      //Eben erwähnter Durchschnittswert, der in das Koordinatensystem eingetragen wird.
+    private int datenGraphZaehler;              //zählt von 0-9, damit erkannt werden kann, ob zehn Messungen gesammelt wurden
+    private int xPosGraph;                      //Position der Punkte auf dem Graphen; Wird in Einerschritten erhöht
+    private GraphView graph;                    //Koordinatensystem
 
-    private double starthoehe;
-    private double zwischenhoehe;
+    private double starthoehe;                  //Höhe, von der aus die Messung beginnt
+    private double zwischenhoehe;               //nachdem die Distanz des Benachrichtigungsintervall erreicht ist wird das nächste von diesem Wert abhängig gemacht, da starthöhe für den Graphen benötigt wird
 
+
+    /**
+     *Ruft nacheinander die Methoden zur initialisierung auf. DIse sind zur übersichtlichkeit auf drei Einzelne Methoden aufgeteilt.
+     */
     @Override
    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
     {
@@ -81,6 +90,7 @@ public class GPSFragment extends Fragment{
         locationManagerInit();
         return view;
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
@@ -94,6 +104,12 @@ public class GPSFragment extends Fragment{
         }
     }
 
+
+    /**
+     * knopfInitialisieren() erzeugt einen Aktion listener für den oberen Knopf, der es ermöglicht zwischen den Modi zu wechseln.
+     * Je nachdem wird dann der Text in den beiden Textfeldern angepasst.
+     * wird der Knopf gedrück, Vibriert das Gerät für 100Millisekunden
+     */
     private void knopfInitialisieren()
     {
 
@@ -137,13 +153,13 @@ public class GPSFragment extends Fragment{
 
     }
 
+
+
     private void knopfdruck()
     {
         if(zustand==0)
         {
             button.setText(R.string.stop);
-            //textView.setText(R.string.Signal_wird_gesucht);
-            //noinspection MissingPermission
             locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);//Fehlermeldung nicht relevant, da der geforderte "permission check" seperat geprüft wird.
             zustand=1;
             Log.d("d","position angefragt");
@@ -305,6 +321,10 @@ public class GPSFragment extends Fragment{
         info.setText(R.string.Genauigkeit_Text);
         info.setTextSize(10);
 
+        tv_Genauigkeit = (TextView) view.findViewById(R.id.tv_Genauigkeit);
+        tv_Genauigkeit.setText(R.string.Genauigkeit_Text);
+        tv_Genauigkeit.setTextSize(10);
+
         vibrator=(Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
     }
 
@@ -327,7 +347,7 @@ public class GPSFragment extends Fragment{
                 breite= location.getLongitude();
                 hoehe=location.getAltitude();
                 genauigkeit= location.getAccuracy();
-                provider= location.getProvider();
+
 
                 if(fixierungStart<=20)          //nötig, da die ersten Werte nicht sehr genau sind (Abweichungen von 50-60Metern vorkommen)
                 {
@@ -377,7 +397,6 @@ public class GPSFragment extends Fragment{
                 {
                     datenGenau();
                 }
-                //textView.setText("Koordinaten\n\n "+location.getLatitude()+ "\n" + location.getLongitude() + "\nProvider:\t" + location.getProvider() + "\nHöhe:\t" + location.getAltitude() + "\nGenauigkeit:\t" + location.getAccuracy()+" mögliche Abweichung in Metern\n");
             }
 
             @Override
@@ -446,7 +465,7 @@ public class GPSFragment extends Fragment{
         hoehe=Math.round(hoehe);
         hoehe=hoehe/100;
 
-        hoehendifferenz=hoehe-zwischenhoehe;
+        hoehendifferenz=zwischenhoehe-hoehe;
         if(benachrichtigungsintervall!=-1)
         {
             if (hoehendifferenz >= benachrichtigungsintervall || hoehendifferenz <= 0 - benachrichtigungsintervall)
@@ -458,14 +477,14 @@ public class GPSFragment extends Fragment{
         }
 
         Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe);
-        info.setText("Genauigkeit in Metern: "+genauigkeit);
+        tv_Genauigkeit.setText("Genauigkeit in Metern: "+genauigkeit);
     }
 
     private void datenEinfach()
     {
         double hoehendifferenz;
 
-        hoehendifferenz=hoehe-zwischenhoehe;
+        hoehendifferenz=zwischenhoehe-hoehe;
         if(benachrichtigungsintervall!=-1)
         {
             if (hoehendifferenz >= benachrichtigungsintervall || hoehendifferenz <= 0 - benachrichtigungsintervall)
@@ -475,8 +494,8 @@ public class GPSFragment extends Fragment{
             }
         }
 
-        Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe+"\n"+provider);
-        info.setText("Genauigkeit in Metern: "+genauigkeit);;
+        Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe);
+        tv_Genauigkeit.setText("Genauigkeit in Metern: "+genauigkeit);;
     }
 }
 

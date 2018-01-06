@@ -10,13 +10,13 @@
     <string name="mail">support: info@p-seminar.ml</string>
 
 
-    <string name="Text_einfach">Koordinaten: \nLängengrad:  \nBreitengrad: \nHöhe über NN:</string>
+    <string name="Text_einfach">Koordinaten: \nLängengrad:  \nBreitengrad: \nHöhe über nN:</string>
     <string name="Genauigkeit_Text">Genauigkeit in Metern: -</string>
     <string name="drei_Platzhalter">\n-\n-\n-</string>
     <string name="erweitert_Modus_Text">erweiterter Modus</string>
     <string name="platzhalter_drei">- - -</string>
     <string name="vier_Platzhalter">\n-\n-\n-\n-</string>
-    <string name="text_erweitert">Koordinaten: \nLängengrad: \nBreitengrad: \nHöhe über NN: Signal:</string>
+    <string name="text_erweitert">Koordinaten: \nLängengrad: \nBreitengrad: \nHöhe über nN: Signal:</string>
     <string name="stop">Stop</string>
     <string name="Signal_wird_gesucht">GPS Signal wird gesucht</string>
     <string name="Koordinaten">Koordinaten</string>
