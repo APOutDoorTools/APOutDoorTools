@@ -7,13 +7,9 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="Nubibusmeter" />
         <item
-            android:id="@+id/nav_hypsometrum"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Hypsometrum" />
-        <item
             android:id="@+id/nav_compass"
             android:icon="@android:drawable/ic_menu_compass"
-            android:title="AcusMagnetica" />
+            android:title="Kompass" />
         <item
             android:id="@+id/nav_camera"
             android:icon="@android:drawable/ic_menu_mylocation"
