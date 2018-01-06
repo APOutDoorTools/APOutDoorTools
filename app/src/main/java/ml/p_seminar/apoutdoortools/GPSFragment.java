@@ -476,7 +476,7 @@ public class GPSFragment extends Fragment{
             }
         }
 
-        Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+hoehe);
+        Ergebnisse.setText("\n"+laenge+"\n"+breite+"\n"+ hoehe);
         tv_Genauigkeit.setText("Genauigkeit in Metern: "+genauigkeit);
     }
 
