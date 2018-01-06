@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ml.p_seminar.apoutdoortools">
 
-    <uses-permission android:name="android.permission.INTERNET" />                      //Die hier aufgelisteten Zugriffsrechte werden für die Standortdas GPS
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />                      //Die hier aufgelisteten Zugriffsrechte werden für die Standortermittlung durch das GPS benöigt
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />          //Die hier aufgelisteten Zugriffsrechte werden für die Standortermittlung durch das GPS benöigt
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />        //Die hier aufgelisteten Zugriffsrechte werden für die Standortermittlung durch das GPS benöigt
+    <uses-permission android:name="android.permission.VIBRATE"/>                        //Benötigt um auf den Vibrationsmotor zugreifen zu können
 
 
     <application

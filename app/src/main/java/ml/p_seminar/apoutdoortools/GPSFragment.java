@@ -154,6 +154,9 @@ public class GPSFragment extends Fragment{
     }
 
 
+    /**
+     * knopfdruck wird aufgerufen, sollte der untere Knopf gedrückt werden. Je nachdem ob die Positionsbestimmung an- oder ausgeschaltet ist, wird nun das jeweils andere gamacht.
+     */
 
     private void knopfdruck()
     {
@@ -173,6 +176,10 @@ public class GPSFragment extends Fragment{
             Log.d("d","stop");
         }
     }
+
+    /**
+     * setSeekBarInit() erzeugt die seekbar und einen Listener, der je nach Eingabe durch den Benutzer das benachichtigungsinterval festlegt und auf dem darunter liegenden Textfeld "tvi" ausgibt.
+     */
 
     private void setSeekBarInit()
     {
@@ -242,6 +249,10 @@ public class GPSFragment extends Fragment{
         });
     }
 
+
+    /**
+     * dialogMethode erzeugt eine Dialog, mithilfe dessen eine beliebig große Zahl als Benachrichtigunsintervall festgelegt werden kann
+     */
     private void dialogmethode()
     {
         AlertDialog.Builder builder;
@@ -278,6 +289,10 @@ public class GPSFragment extends Fragment{
 
     }
 
+
+    /**
+     * initAnzeige() initialisiert alle globalen Variablen sowie die graphischen Elemente der Benutzeroberfläche.
+     */
     private void initAnzeige()
     {
         int i=0;
@@ -328,10 +343,18 @@ public class GPSFragment extends Fragment{
         vibrator=(Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);
     }
 
+
+    /**
+     * locationManagerInit() initialisiert den Locationlistener und -manager.
+     *      onLocationChanged wird in die Methode "knopfdruck" regelmäßig aufgerufen. dabei werden Längen- und Breitengrad, sowie Höhe über normal Null und die Genauigkeit der Messung bestimmt.
+     *      Außerdem bildet es nach den ersten 20 Messungen von immer 10 Messugnen den Durchschnitt und trägt diesen in das Koordinaten System.
+     *
+     *      onProviderDisabled() wird automatisch vom System aufgerufen, sollte das GPS deaktiviert werden. Daraufhin öffnet sich ein Dialogfenster, welches bittet as GPS anzuschalten.
+     *
+     * zuletzt wird geprüft, ob alle erforderlichen Befugnisse erteilt wurden. Diese werden durch das Manifest erfragt.
+     */
     private void locationManagerInit()
     {
-
-
         locationManager = (LocationManager) getActivity().getSystemService(LOCATION_SERVICE);
 
         locationListener = new LocationListener()
@@ -340,8 +363,6 @@ public class GPSFragment extends Fragment{
             public void onLocationChanged(Location location)
             {
                 int i=0;
-                //Log.e("debug","neue position");
-
 
                 laenge=location.getLatitude();
                 breite= location.getLongitude();
@@ -362,7 +383,6 @@ public class GPSFragment extends Fragment{
                         starthoehe=starthoehe/100;
                         Toast.makeText(getActivity(),getString(R.string.Starthoehe)+starthoehe+getString(R.string.Meter),Toast.LENGTH_LONG).show();
                         series.appendData(new DataPoint(xPosGraph,0),true,5000);
-                        //series.appendData(new DataPoint(1,1),true,5000);            //nur zu testzwecken
                         graph.addSeries(series);
                         xPosGraph=1;
                     }
@@ -391,11 +411,11 @@ public class GPSFragment extends Fragment{
 
                 if(zustandDaten==0)
                 {
-                    datenEinfach();
+                    datenGenau();
                 }
                 else
                 {
-                    datenGenau();
+                    datenEinfach();
                 }
             }
 
@@ -450,7 +470,11 @@ public class GPSFragment extends Fragment{
         }
     }
 
-    private void datenGenau()
+
+    /**
+     * datenGenau() rundet die durch den locationListener ermittelten Werte und schreibt sie in die entsprechende TextView. Außerdem wird geprüft ob das Benachrichtigungsintervall erreicht wurde.
+     */
+    private void datenEinfach()
     {
         double hoehendifferenz;
         laenge=laenge*100;
@@ -480,7 +504,11 @@ public class GPSFragment extends Fragment{
         tv_Genauigkeit.setText("Genauigkeit in Metern: "+genauigkeit);
     }
 
-    private void datenEinfach()
+
+    /**
+     * datenEinfach() schreib die durch den locationListener ermittelten Werte wie sie sind in die entaprechende TextView. Außerdem wird geprüft ob das Benachrichtigungsintervall erreicht wurde.
+     */
+    private void datenGenau()
     {
         double hoehendifferenz;
 
@@ -498,5 +526,3 @@ public class GPSFragment extends Fragment{
         tv_Genauigkeit.setText("Genauigkeit in Metern: "+genauigkeit);;
     }
 }
-
-
