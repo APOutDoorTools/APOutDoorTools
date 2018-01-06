@@ -3,6 +3,8 @@ package ml.p_seminar.apoutdoortools;
 
 /**
  * Diese Klasse ermöglicht die Positionsbestimmung und den Höhenmesser sowie dessen graphische Darstellung.
+ *
+ * Geschrieben von Tobias
  */
 
 import android.Manifest;
