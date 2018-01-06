@@ -1,5 +1,11 @@
 package ml.p_seminar.apoutdoortools;
 
+
+/**
+ * Diese Klasse ermöglicht mittels dem seitlichen Menü zwischen den einzelnen Activities hin und her zu schalten.
+ * Geschrieben von Lukas, Felix.
+ */
+
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
