@@ -124,14 +124,38 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
                 : bewoelkung < 50 ? "etwas bewölkt."
                 : bewoelkung < 75 ? "bewölkt"
                 : bewoelkung < 100 ? "stark bewölkt."
-                : "Log.wtf(\"Was ist jetzt los!? Ich sehe nichts!\")";
+                : "Kamera auf den Himmel richten";
+
+        int achtel=0;
+        if(bewoelkung == 12.5){
+            achtel=0;
+        }
+        else if(bewoelkung < 12.5){
+            achtel=1;
+        }else if(bewoelkung < 25){
+            achtel=2;
+        }else if(bewoelkung < 37.5){
+            achtel=3;
+        }else if(bewoelkung < 50){
+            achtel=4;
+        }else if(bewoelkung < 62.5){
+            achtel=5;
+        }else if(bewoelkung < 75){
+            achtel=6;
+        }else if(bewoelkung < 87.5){
+            achtel=7;
+        }else if(bewoelkung < 100){
+            achtel=8;
+        }
+        else if(bewoelkung == 100){
+            achtel=9;
+        }
 
         TextView textView=(TextView)view.findViewById(R.id.anteile);
         String t= "Weißanteil: "+w*100/pg+"% \n" +
                 "Blauanteil: "+b*100/pg+"% \n" +
                 "Schwarzanteil: "+s*100/pg+"% \n" +
-                "Nullanteil: "+nul*100/pg+"% \n"+
-                "Bewölkung: "+ bewoelkung+"% \n"+
+                "Bewölkung: "+ bewoelkung+"% ; "+achtel+"/8"+"\n"+
                 bewoelkungsstring;
         textView.setText(t);
     }

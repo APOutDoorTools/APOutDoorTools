@@ -3,9 +3,9 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/Bewölkungsmesser"
+            android:id="@+id/nav_nubibusmeter"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Nubibusmeter" />
+            android:title="Bewölkungsmesser" />
         <item
             android:id="@+id/nav_compass"
             android:icon="@android:drawable/ic_menu_compass"
@@ -18,10 +18,6 @@
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Karte" />
-        <item
-            android:id="@+id/nav_nubibusmeter"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="nubibusmeter" />
 
     </group>
 

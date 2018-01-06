@@ -76,16 +76,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         android.app.FragmentManager fragmentmanager=mFragmentManager;
 
-        if (id == R.id.nav_hypsometrum) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
-        } else if (id == R.id.nav_nubibusmeter) {
+        if (id == R.id.nav_nubibusmeter) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
         } else if (id == R.id.nav_compass) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new AcusMagneticaFragment()).commit();
         } else if (id == R.id.nav_camera) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new GPSFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-
+            
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -97,25 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static android.app.FragmentManager mFragmentManager = null;
     public static android.app.FragmentManager getMFragmentManager() {
         return mFragmentManager;
-    }
-
-    private void debug(int id){
-        android.app.FragmentManager fragmentmanager=getFragmentManager();
-
-        if (id == R.id.nav_hypsometrum) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new HypsometrumFragment()).commit();
-        } else if (id == R.id.nav_nubibusmeter) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new nubibusmeterFragment()).commit();
-        } else if (id == R.id.nav_compass) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new AcusMagneticaFragment()).commit();
-        } else if (id == R.id.nav_camera) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new GPSFragment()).commit();
-        } else if (id == R.id.nav_gallery) {
-            fragmentmanager.beginTransaction().replace(R.id.content_frame,new Karte()).commit();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
     }
 
 }
