@@ -2,15 +2,8 @@ package ml.p_seminar.apoutdoortools;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-
 
 public class Karte extends Fragment implements OnMapReadyCallback {
-
 
 
     private GoogleMap mMap;

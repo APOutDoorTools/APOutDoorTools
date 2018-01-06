@@ -5,7 +5,6 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +79,8 @@ public class nubibusmeterFragment extends Fragment implements Camera.PreviewCall
         data[1]= (byte)0xF0;
         data[2]= (byte)0x5A;
         */
+        //Log.e("datalenght",""+data.length);
+        //Log.e("Camerasize","w"+cameraView.getCameraSize().width+" h"+cameraView.getCameraSize().height);
 
         w=0;
         s=0;
