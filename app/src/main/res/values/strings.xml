@@ -30,5 +30,6 @@
     <string name="GPS_aktivieren">Activate GPS</string>
     <string name="Aktivieren_Sie_GPS">Aktivieren Sie GPS!</string>
     <string name="Zugriff_verweigert">GPS Zugriff verweigert</string>
+    <string name="title_activity_karte">Karte</string>
 
 </resources>

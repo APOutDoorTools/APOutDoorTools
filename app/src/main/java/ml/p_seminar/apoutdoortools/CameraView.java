@@ -1,5 +1,6 @@
 package ml.p_seminar.apoutdoortools;
 
+
 import android.content.Context;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
