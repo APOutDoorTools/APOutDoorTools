@@ -339,7 +339,7 @@ public class GPSFragment extends Fragment{
         info.setTextSize(10);
 
         tv_Genauigkeit = (TextView) view.findViewById(R.id.tv_Genauigkeit);
-        tv_Genauigkeit.setText(R.string.Genauigkeit_Text);
+        tv_Genauigkeit.setText("-");
         tv_Genauigkeit.setTextSize(10);
 
         vibrator=(Vibrator) getActivity().getSystemService(VIBRATOR_SERVICE);

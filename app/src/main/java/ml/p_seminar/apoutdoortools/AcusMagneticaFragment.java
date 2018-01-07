@@ -2,29 +2,23 @@ package ml.p_seminar.apoutdoortools;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import static android.content.Context.SENSOR_SERVICE;
 
 /**
- * Created by felix kühn_000 on 27.09.2017.
+ * Created by felix kühn
  */
 
 public class AcusMagneticaFragment extends Fragment implements SensorEventListener {

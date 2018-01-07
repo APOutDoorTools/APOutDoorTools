@@ -2,7 +2,6 @@ package ml.p_seminar.apoutdoortools;
 
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.util.Log;
 
 public class NV21Image {
 
@@ -39,7 +38,9 @@ public class NV21Image {
 		if (b < 0) b = 0; else if (b > 262143) b = 262143;
 		return new int[]{Y,0xff000000 | ((r << 6) & 0xff0000) | ((g >> 2) & 0xff00) | ((b >> 10) & 0xff)};
 	}
-	
+	/**
+	 Created by lukas thyroff, felix kühn
+	 */
 	public int zaehleBlauePixel(Rect ausschnitt) {
 		int anzahl = 0;
 		for(int x=ausschnitt.left; x<ausschnitt.right; x++) {
@@ -51,7 +52,9 @@ public class NV21Image {
 		}
 		return anzahl;
 	}
-
+	/**
+	 Created by lukas thyroff, felix kühn
+	 */
 	public Farben istPixelFarbig(int x, int y) {
 		int[] farbe= holePixel(x, y);
 		int Y=farbe[0];

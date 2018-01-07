@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -13,6 +12,10 @@ import android.view.View;
 import java.io.IOException;
 
 import static android.view.SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS;
+
+/**
+ Created by lukas thyroff, felix kühn
+ */
 
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
 

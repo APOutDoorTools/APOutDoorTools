@@ -1,7 +1,7 @@
 package ml.p_seminar.apoutdoortools;
 
 /**
- * Created by felix on 06.10.2017.
+ Created by lukas thyroff, felix kühn
  */
 
 public enum Farben {

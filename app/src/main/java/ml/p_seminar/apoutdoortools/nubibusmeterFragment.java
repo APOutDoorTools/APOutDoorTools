@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Created by lthyr_000 on 26.09.2017.
+ Created by lukas thyroff, felix kühn
  */
 
 public class nubibusmeterFragment extends Fragment implements Camera.PreviewCallback{

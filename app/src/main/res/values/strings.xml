@@ -11,7 +11,7 @@
 
 
     <string name="Text_einfach">Koordinaten: \nLängengrad:  \nBreitengrad: \nHöhe über nN:</string>
-    <string name="Genauigkeit_Text">Genauigkeit in Metern: -</string>
+    <string name="Genauigkeit_Text">Genauigkeit in Metern: </string>
     <string name="drei_Platzhalter">\n-\n-\n-</string>
     <string name="erweitert_Modus_Text">erweiterter Modus</string>
     <string name="platzhalter_drei">- - -</string>
