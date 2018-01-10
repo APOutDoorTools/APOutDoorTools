@@ -32,6 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".handbuch"
+            android:label="@string/title_activity_handbuch"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".handbuchFragement"></activity>
     </application>
 
 </manifest>

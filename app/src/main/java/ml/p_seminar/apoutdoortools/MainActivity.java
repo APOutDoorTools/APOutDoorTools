@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new GPSFragment()).commit();
         } else if (id == R.id.nav_gallery) {
             fragmentmanager.beginTransaction().replace(R.id.content_frame,new KartenFragment()).commit();
+        }else if (id == R.id.nav_handbuch) {
+            fragmentmanager.beginTransaction().replace(R.id.content_frame,new HbFragment()).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

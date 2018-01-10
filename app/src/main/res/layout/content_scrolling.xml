@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ml.p_seminar.apoutdoortools.HbFragment"
+    tools:showIn="@layout/handbuch_layout">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/text_margin"
+        android:text="Handbuch:\n\n\n I.Bewölkungsmesser\n\n\nII.Kompass\n\n\nIII.Höhenmesser\n\n1.Die Höhenmessung muss manuel durch Drüken des Knopfes Position Anfragen gestartet werden. Sollte das GPS des Smartphones nicht aktiviert sein wird man durch eine Warnung daraufhingewiesen dieses einzuschalten.\nHinweis: Für ein optimales Messergebnis empfielt es sich in den Einstellungen die Hohe Messgenauigkeit des GPSs einzustellen. Häufig möglich unter GPS -> Modus.\n\n2.Sobald ein Signal empfangen wird werden Längen- und Breitengrad, sowie Höhe über normal Null  und die Genauigkeit der Messung ausgegeben. Sobald das Signal Verlässlich genug ist wird die zurückgelegte Höhe als Graph veranschaulicht.\n\n3.Durch den oberen Knopf lässt sich einstellen, ob die Werte genau oder gerundet ausgegeben werden sollen.\n\n4.Der Schieberegler ermöglicht eine Höhendifferenz einzustellen, nach deren zurücklegen das Smartphone vibriert.\n\n\nIV.Karte"/>
+
+</android.support.v4.widget.NestedScrollView>
